@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .rpt-alert {
+        animation          : rpt-alert 2s infinite;
+        animation-fill-mode: initial;
+    }
+
+    @keyframes rpt-alert {
+        70% {
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0)
+        }
+
+        100% {
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0)
+        }
+    }
+
+    @keyframes rpt-bounce {
+        0% {
+            transform: scale(0.8);
+            opacity  : 0.1
+        }
+
+        60% {
+            transform: scale(1.1);
+            opacity  : 1
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes rpt-bounce-out {
+        20% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(0.8);
+            opacity  : 0.1
+        }
+    }
+
+    @keyframes rpt-fade {
+        0% {
+            opacity: 0.1
+        }
+
+        100% {
+            opacity: 1
+        }
+    }
+
+    @keyframes rpt-fade-out {
+        0% {
+            opacity: 1
+        }
+
+        60% {
+            opacity: 0
+        }
+
+        100% {
+            opacity: 0
+        }
+    }
+}
