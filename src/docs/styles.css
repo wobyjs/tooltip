@@ -37,11 +37,6 @@ pre,
     background: #ececec !important;
 }
 
-.greyBkgr>div {
-    width: 95%;
-}
-
-
 pre {
     padding   : 20px;
     text-align: left;
@@ -268,14 +263,6 @@ a:visited {
 .row.animations>div {
     margin-left: 0px;
     align-self : center;
-}
-
-.row.v-pos-container>div:nth-child(2) p {
-    margin-bottom: 40px;
-}
-
-.row.v-pos-container>div:nth-child(3) p {
-    margin-bottom: 65px;
 }
 
 .row.h-pos-container>div {

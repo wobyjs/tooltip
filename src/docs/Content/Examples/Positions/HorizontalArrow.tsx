@@ -1,18 +1,17 @@
-import React from 'react'
 import { Tooltip } from '../../../../lib'
 
 export const HorizontalArrow = () => <>
-    <h3 style={{ width: '95%', marginBottom: '0' }}>
+    <h3 class='w-[95%] mb-0'>
         <strong>Horizontally </strong>
         (when tooltip positioned above / below target)
     </h3>
-    <div className="row h-pos-container">
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div class="row h-pos-container w-[95%]">
+        <div class='flex flex-col items-center'>
             <p>
                 Arrow align:
                 <strong> start</strong>
             </p>
-            <div className="hPlaceHolder" style={{ right: '25%' }}>
+            <div class="hPlaceHolder right-1/4">
                 <Tooltip
                     show
                     arrowAlign="start"
@@ -25,12 +24,12 @@ export const HorizontalArrow = () => <>
                 </Tooltip>
             </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div class='flex flex-col items-center'>
             <p>
                 Arrow align:
                 <strong> center</strong>
             </p>
-            <div className="hPlaceHolder">
+            <div class="hPlaceHolder">
                 <Tooltip
                     show
                     arrowAlign="center"
@@ -44,12 +43,12 @@ export const HorizontalArrow = () => <>
 
             </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div class='flex flex-col items-center'>
             <p>
                 Arrow align:
                 <strong> end</strong>
             </p>
-            <div className="hPlaceHolder" style={{ left: '25%' }}>
+            <div class="hPlaceHolder left-1/4">
                 <Tooltip
                     show
                     arrowAlign="end"

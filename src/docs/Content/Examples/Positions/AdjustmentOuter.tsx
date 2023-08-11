@@ -1,25 +1,9 @@
-import React from 'react'
 import { Tooltip } from '../../../../lib'
 
 export const AdjustmentOuter = () => <>
-    <h3 style={{ width: '95%', marginBottom: '0' }}><strong>Outer positions</strong></h3>
-    <div className="adjOuter">
-        <div
-            style={{
-                cursor: 'pointer',
-                border: '2px solid #4b4b4b',
-                background: 'rgba(137, 27, 211, 0.4)',
-                width: '150px',
-                height: '100px',
-                position: 'relative',
-                marginTop: '80px',
-                fontSize: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '5px'
-            }}
-        >
+    <h3 class='w-[95%] mb-0'><strong>Outer positions</strong></h3>
+    <div class="adjOuter">
+        <div class='cursor-pointer w-[150px] h-[100px] relative text-sm flex items-center justify-center mt-20 rounded-[5px] border-2 border-solid border-[#4b4b4b] bg-[rgba(137,27,211,0.4)]'>
             <h3>Target element</h3>
             <Tooltip
                 show
@@ -29,7 +13,7 @@ export const AdjustmentOuter = () => <>
                 textboxWidth="120px"
                 moveLeft="40px"
                 hoverBackground="bg-[#3b0586]"
-                hoverColor="white"
+                hoverColor="text-[white]"
             >
                 <span>
                     moveLeft
@@ -45,7 +29,7 @@ export const AdjustmentOuter = () => <>
                 textboxWidth="120px"
                 moveDown="40px"
                 hoverBackground="bg-[#3b0586]"
-                hoverColor="white"
+                hoverColor="text-[white]"
             >
                 <span>
                     moveDown
@@ -61,7 +45,7 @@ export const AdjustmentOuter = () => <>
                 textboxWidth="120px"
                 moveRight="40px"
                 hoverBackground="bg-[#3b0586]"
-                hoverColor="white"
+                hoverColor="text-[white]"
             >
                 <span>
                     moveRight
@@ -77,7 +61,7 @@ export const AdjustmentOuter = () => <>
                 textboxWidth="120px"
                 moveUp="40px"
                 hoverBackground="bg-[#3b0586]"
-                hoverColor="white"
+                hoverColor="text-[white]"
             >
                 <span>
                     moveUp

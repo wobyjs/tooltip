@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import { render } from 'react-dom'
+import { useEffect, $ } from 'voby'
+import { render } from 'voby'
 // eslint-disable-next-line
 import Prism from 'prismjs'
 
@@ -11,6 +11,7 @@ import { AdvancedUsage } from './Content/AdvancedUsage'
 import { Examples } from './Content/Examples'
 import { Api } from './Content/Api'
 
+import '../../dist/output.css'
 import './styles.css'
 import './prism.css'
 
@@ -22,30 +23,29 @@ import './prism.css'
 //     }, [codeBlockRef])
 // }
 
+
 export const Demo = () => {
-    const codeBlockRef = useRef()
+    const codeBlockRef = $()
     useEffect(() => {
-        if (codeBlockRef.current)
+        if (codeBlockRef)
             Prism.highlightAll()
-    }, [codeBlockRef])
+    })
     // usePrismHighlight(codeBlockRef)
-    return (
-        <div className="flexContainer">
-            <Header />
-            <div className="content">
-                <div className="side">
-                    <SideNav />
-                </div>
-                <div ref={codeBlockRef} className="main">
-                    <section id="install"><Intro /></section>
-                    <section id="basic"><BasicUsage /></section>
-                    <section id="examples"><Examples /></section>
-                    <section id="advanced"><AdvancedUsage /></section>
-                    <section id="api"><Api /></section>
-                </div>
+    return <div class="flexContainer">
+        <Header />
+        <div class="content">
+            <div class="side">
+                <SideNav />
+            </div>
+            <div ref={codeBlockRef} class="main">
+                <section id="install"><Intro /></section>
+                <section id="basic"><BasicUsage /></section>
+                <section id="examples"><Examples /></section>
+                <section id="advanced"><AdvancedUsage /></section>
+                <section id="api"><Api /></section>
             </div>
         </div>
-    )
+    </div>
 }
 
 render(<Demo />, document.getElementById('app'))

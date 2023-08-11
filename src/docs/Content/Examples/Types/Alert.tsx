@@ -1,51 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, $ } from 'voby'
 import { Tooltip } from '../../../../lib'
 import logo from '../../../../assets/logo.svg'
 
 export const Alert = () => {
-    const [alternate, setAlternate] = useState(false)
+    const alternate = $(false)
 
-    useEffect(() => {
-        setInterval(() => {
-            setAlternate(!alternate)
-        }, 5000)
-    }, [])
+    // useEffect(() => {
+    setInterval(() => {
+        alternate(!alternate())
+    }, 5000)
+    // })
 
     return <>
-        <h3 style={{ margin: '25px 0 0 0' }}>Static alert example</h3>
-        <div
-            style={{
-                margin: '5px auto 30px auto',
-                padding: '0 30px',
-                width: '100%',
-                border: '1px solid lightgrey',
-                height: '65px',
-                backgroundColor: 'white',
-                fontSize: '12px',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-            }}
-        >
+        <h3 class='mt-[25px]'>Static alert example</h3>
+        <div class='mt-[5px] mx-auto mb-[30px] py-0 px-[30px] w-full border-solid border-[lightgrey]
+                h-[65px] bg-[white] text-[12px] flex flex-row justify-between items-center'>
             <img
                 src={logo}
-                style={{
-                    height: '60%',
-                    left: '50px'
-                }}
+                class='h-[60%] left-[50px]'
                 alt=""
             />
-            <div style={{
-                fontSize: '13px',
-                fontWeight: '700',
-                width: '190px',
-                display: 'flex',
-                justifyContent: 'space-between'
-            }}
+            <div class='text-[13px] font-bold w-[190px] flex justify-between'
             >
                 <span
-                    style={{ position: 'relative', marginLeft: '30px' }}
+                    class='relative ml-[30px]'
                 >
                     Shopping Cart
                     <Tooltip

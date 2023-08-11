@@ -1,15 +1,14 @@
-import React from 'react'
 import { Tooltip } from '../../../../lib'
 
 const Types = () => {
     return (
-        <div className="row types" style={{ width: '95%', justifyContent: 'space-around' }}>
+        <div class="row types w-[95%] justify-around">
             <div>
                 <p>
                     <strong>Hoverable </strong>
                     (default)
                 </p>
-                <div className="vPlaceHolder">
+                <div class="vPlaceHolder">
                     <Tooltip
                         show
                         textboxWidth="150px"
@@ -25,7 +24,7 @@ const Types = () => {
                     <strong>Static </strong>
                     (via static prop)
                 </p>
-                <div className="vPlaceHolder">
+                <div class="vPlaceHolder">
                     <Tooltip
                         show
                         textboxWidth="150px"
@@ -42,7 +41,7 @@ const Types = () => {
                     <strong>Alert </strong>
                     (via alert prop)
                 </p>
-                <div className="vPlaceHolder">
+                <div class="vPlaceHolder">
                     <Tooltip
                         show
                         textboxWidth="150px"

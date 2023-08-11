@@ -6,6 +6,7 @@
         "allowUnusedLabels": false,
         "alwaysStrict": true,
         "declaration": true,
+        "declarationDir": "./dist/types",
         "disableSizeLimit": true,
         "esModuleInterop": false,
         "forceConsistentCasingInFileNames": true,
@@ -13,7 +14,8 @@
         "inlineSourceMap": false,
         "inlineSources": false,
         // "isolatedModules": true,
-        "jsx": "preserve",
+        "jsx": "react-jsx",
+        "jsxImportSource": "voby",
         "lib": [
             "dom",
             "esnext",
@@ -47,9 +49,10 @@
             "types"
         ],
         // "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
-        "composite": true,
+        // "composite": true,
     },
     "exclude": [
+        "node_modules",
         "vite.config.ts",
         "dist*"
     ]

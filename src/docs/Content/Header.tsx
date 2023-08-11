@@ -1,12 +1,11 @@
-import React from 'react'
 import { Tooltip } from '../../lib'
 import '../styles.css'
 
-export const Header = () => <div className="flexContainer purpleGradient header">
-    <div className="ribbon">
+export const Header = () => <div class="flexContainer purpleGradient header">
+    <div class="ribbon">
         <a
-            style={{ color: 'white' }}
-            href="https://github.com/justinrhodes1/react-power-tooltip/fork"
+            class='text-[white]'
+            href="https://github.com/justinrhodes1/voby-power-tooltip/fork"
         >
             Fork me on GitHub
         </a>
@@ -14,7 +13,7 @@ export const Header = () => <div className="flexContainer purpleGradient header"
     <h1>
         React-power-
         <span
-            className='relative inline-block'
+            class='relative inline-block'
         >
             tooltip
             <Tooltip
@@ -31,17 +30,12 @@ export const Header = () => <div className="flexContainer purpleGradient header"
             </Tooltip>
         </span>
     </h1>
+    <br />
+    <br />
+    <br />
     <h2>A flexible, lightweight tooltip &amp; menu library. </h2>
-    <div
-        className="github-btn-bar"
-        style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '165px'
-        }}
-    >
-        <a className="github-button" href="https://github.com/justinrhodes1/react-power-tooltip" data-size="large" data-show-count="true" aria-label="Star justinrhodes1/react-power-tooltip on GitHub">Star</a>
-        <a className="github-button" href="https://github.com/justinrhodes1/react-power-tooltip/fork" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork justinrhodes1/react-power-tooltip on GitHub">Fork</a>
+    <div class="github-btn-bar flex flex-row justify-between w-[165px]">
+        <a class="github-button" href="https://github.com/justinrhodes1/voby-power-tooltip" data-size="large" data-show-count="true" aria-label="Star justinrhodes1/voby-power-tooltip on GitHub">Star</a>
+        <a class="github-button" href="https://github.com/justinrhodes1/voby-power-tooltip/fork" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork justinrhodes1/voby-power-tooltip on GitHub">Fork</a>
     </div>
 </div>

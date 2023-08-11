@@ -1,15 +1,12 @@
-import React from 'react'
 import { Tooltip } from '../../../../lib'
 
 export const Shapes = () => <>
-    <h3 style={{ width: '95%', marginBottom: '0' }}><strong>Shapes / Fonts</strong></h3>
-    <div className="row">
+    <h3 class='w-[95%] mb-0'><strong>Shapes / Fonts</strong></h3>
+    <div class="row w-[95%] ">
         <div>
-            <p>Default</p>
-            <div className="vPlaceHolder">
-                <Tooltip
-                    show
-                >
+            <p class='mb-[10px]'>Default</p>
+            <div class="vPlaceHolder">
+                <Tooltip show>
                     <span>
                         Our Technology
                         <p>Some text</p>
@@ -20,7 +17,7 @@ export const Shapes = () => <>
         </div>
         <div>
             <p>Text / shadows</p>
-            <div className="vPlaceHolder">
+            <div class="vPlaceHolder">
                 <Tooltip
                     show
                     textAlign="right"
@@ -35,11 +32,11 @@ export const Shapes = () => <>
         </div>
         <div>
             <p>Corners / lines</p>
-            <div className="vPlaceHolder">
+            <div class="vPlaceHolder">
                 <Tooltip
                     show
                     borderRadius="0px"
-                    lineSeparated="3px solid #ececec"
+                    lineSeparated="border-b-[3px] border-b-[#ececec]"
                 >
                     <span>Our Technology</span>
                     <span>Our Story</span>

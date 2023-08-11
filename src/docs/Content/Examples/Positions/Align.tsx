@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import { $, $$ } from 'voby'
 import { Tooltip } from '../../../../lib'
 
 export const AlignPositions = () => {
-    const [hover, setHover] = useState(false)
+    const hover = $<string | boolean>(false)
 
     // const hoverHandler = (side: boolean) => setHover(side)
 
-    return <div style={{ position: 'relative', fontSize: '14px', width: '250px' }}>
+    return <div class='relative text-sm w-[250px]'>
         <Tooltip
-            show={hover === 'left'}
+            show={() => $$(hover) === 'left'}
             position="left top"
             arrowAlign="center"
             textboxWidth="auto"
@@ -17,7 +17,7 @@ export const AlignPositions = () => {
             <span>Top</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'left'}
+            show={() => $$(hover) === 'left'}
             position="left center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -26,7 +26,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'left'}
+            show={() => $$(hover) === 'left'}
             position="left bottom"
             arrowAlign="center"
             textboxWidth="auto"
@@ -35,7 +35,7 @@ export const AlignPositions = () => {
             <span>Bottom</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'right'}
+            show={() => $$(hover) === 'right'}
             position="right top"
             arrowAlign="center"
             textboxWidth="auto"
@@ -44,7 +44,7 @@ export const AlignPositions = () => {
             <span>Top</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'right'}
+            show={() => $$(hover) === 'right'}
             position="right center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -53,7 +53,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'right'}
+            show={() => $$(hover) === 'right'}
             position="right bottom"
             arrowAlign="center"
             textboxWidth="auto"
@@ -62,7 +62,7 @@ export const AlignPositions = () => {
             <span>Bottom</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'top'}
+            show={() => $$(hover) === 'top'}
             position="top left"
             arrowAlign="center"
             textboxWidth="auto"
@@ -71,7 +71,7 @@ export const AlignPositions = () => {
             <span>Left</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'top'}
+            show={() => $$(hover) === 'top'}
             position="top center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -80,7 +80,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'top'}
+            show={() => $$(hover) === 'top'}
             position="top right"
             arrowAlign="center"
             textboxWidth="auto"
@@ -89,7 +89,7 @@ export const AlignPositions = () => {
             <span>Right</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'bottom'}
+            show={() => $$(hover) === 'bottom'}
             position="bottom left"
             arrowAlign="center"
             textboxWidth="auto"
@@ -98,7 +98,7 @@ export const AlignPositions = () => {
             <span>Left</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'bottom'}
+            show={() => $$(hover) === 'bottom'}
             position="bottom center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -107,7 +107,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={hover === 'bottom'}
+            show={() => $$(hover) === 'bottom'}
             position="bottom right"
             arrowAlign="center"
             textboxWidth="auto"
@@ -115,69 +115,38 @@ export const AlignPositions = () => {
         >
             <span>Right</span>
         </Tooltip>
-        <div className="square purpleGradient">
-            <div style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '15px'
-            }}
-            >
-                <div style={{
-                    width: '70%',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between'
-                }}
-                >
+        <div class="square purpleGradient">
+            <div class='absolute w-full h-full flex items-center justify-center text-[15px]'>
+                <div class='w-[70%] flex flex-row justify-between'>
                     <span>Left</span>
                     <span>Right</span>
                 </div>
             </div>
-            <div style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '15px'
-            }}
-            >
-                <div style={{
-                    height: '70%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                }}
-                >
+            <div class='absolute w-full h-full flex items-center justify-center text-[15px]'>
+                <div class='h-[70%] flex flex-col justify-between items-center'>
                     <span>Top</span>
                     <span>Bottom</span>
                 </div>
             </div>
             <div
-                className="left"
-                onMouseEnter={() => setHover('left')}
-                onMouseLeave={() => setHover(false)}
+                class="left"
+                onMouseEnter={() => hover('left')}
+                onMouseLeave={() => hover(false)}
             />
             <div
-                className="top"
-                onMouseEnter={() => setHover('top')}
-                onMouseLeave={() => setHover(false)}
+                class="top"
+                onMouseEnter={() => hover('top')}
+                onMouseLeave={() => hover(false)}
             />
             <div
-                className="right"
-                onMouseEnter={() => setHover('right')}
-                onMouseLeave={() => setHover(false)}
+                class="right"
+                onMouseEnter={() => hover('right')}
+                onMouseLeave={() => hover(false)}
             />
             <div
-                className="bottom"
-                onMouseEnter={() => setHover('bottom')}
-                onMouseLeave={() => setHover(false)}
+                class="bottom"
+                onMouseEnter={() => hover('bottom')}
+                onMouseLeave={() => hover(false)}
             />
         </div>
     </div>

@@ -7,12 +7,12 @@ const config = defineConfig({
         minify: false,
         lib: {
             entry: ["./src/docs/index.html"],
-            name: "react-power-tooltip",
+            name: "voby-power-tooltip",
             formats: ['cjs', 'es', 'umd'],
             fileName: (format: string, entryName: string) => `${entryName}.${format}.js`
         },
         outDir: './build',
-        sourcemap: true,
+        sourcemap: false,
     },
     esbuild: {
         jsx: 'automatic',

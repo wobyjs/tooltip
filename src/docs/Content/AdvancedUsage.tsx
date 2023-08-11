@@ -1,16 +1,14 @@
-import React from 'react'
-
 export const AdvancedUsage = () => <>
     <h1>Advanced Usage</h1>
     <h2 id="custom-animations">Custom Animations</h2>
-    <p style={{ lineHeight: '1.5' }}>
+    <p class='leading-[1.5]'>
         To customize mount and umount animations
     </p>
-    <ol style={{ lineHeight: '1.5' }}>
+    <ol class='leading-[1.5]'>
         <li>Add your own CSS @keyframes rules to the global scope</li>
         <li>Enable react-power-tooptip to use your animations</li>
     </ol>
-    <p style={{ lineHeight: '1.5' }}>
+    <p class='leading-[1.5]'>
         Add your keyframe rules to the
         <strong> global scope </strong>
         using the same selector for both mount and unmount related keyframes. All
@@ -21,7 +19,7 @@ export const AdvancedUsage = () => <>
         suffix.
     </p>
     <pre>
-        <code className="language-css">
+        <code class="language-css">
             {`/* Global Scope */
 @keyframes rpt-slideUpDown {
   0%   { transform: translateY(20px); opacity: 0 }
@@ -40,7 +38,7 @@ export const AdvancedUsage = () => <>
         pre- or suffixes) to your tooltip via the animation prop.
     </p>
     <pre>
-        <code className="language-javascript">
+        <code class="language-javascript">
             {`<Tooltip
     show={this.state.show}
     animation='slideUpDown'

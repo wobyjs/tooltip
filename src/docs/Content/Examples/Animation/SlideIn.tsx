@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import { $ } from 'voby'
 import { Tooltip } from '../../../../lib'
 
 export const SlideIn = () => {
-    const [show, setShow] = useState(false)
-    const showTooltip = (bool: boolean) => setShow(bool)
+    const show = $(false)
+    const showTooltip = (bool: boolean) => show(bool)
 
     return <div
         onMouseOver={() => showTooltip(true)}
         onMouseLeave={() => showTooltip(false)}
-        className="hoverDiv"
+        class="hoverDiv"
     >
-        <span style={{ marginBottom: '15px' }}>Hover Me</span>
-        <span style={{ fontSize: '14px' }}><strong>SlideUpDown</strong></span>
+        <span class='mb-[15px]'>Hover Me</span>
+        <span class='text-[14px]'><strong>SlideUpDown</strong></span>
         <Tooltip
             show={show}
             animation="slideUpDown"

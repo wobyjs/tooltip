@@ -1,18 +1,17 @@
-import React from 'react'
 import { Tooltip } from '../../../../lib'
 
 export const VerticalArrow = () => <>
-    <h3 style={{ width: '95%', marginBottom: '0' }}>
+    <h3 class='w-[95%] mb-0'>
         <strong>Vertically </strong>
         (when tooltip positioned left / right of target)
     </h3>
-    <div className="row v-pos-container">
+    <div class="row v-pos-container mb-[40px] w-[95%]">
         <div>
             <p>
                 Arrow align:
                 <strong> start</strong>
             </p>
-            <div className="vPlaceHolder">
+            <div class="vPlaceHolder">
                 <Tooltip
                     show
                     textboxWidth="auto"
@@ -24,11 +23,11 @@ export const VerticalArrow = () => <>
             </div>
         </div>
         <div>
-            <p>
+            <p class='mb-[40px]'>
                 Arrow align:
                 <strong> center</strong>
             </p>
-            <div className="vPlaceHolder">
+            <div class="vPlaceHolder">
                 <Tooltip
                     show
                     arrowAlign="center"
@@ -41,11 +40,11 @@ export const VerticalArrow = () => <>
             </div>
         </div>
         <div>
-            <p>
+            <p class='mb-[65px]'>
                 Arrow align:
                 <strong> end</strong>
             </p>
-            <div className="vPlaceHolder">
+            <div class="vPlaceHolder">
                 <Tooltip
                     show
                     arrowAlign="end"

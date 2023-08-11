@@ -1,42 +1,33 @@
-import React, { useState, ReactNode, useRef, useEffect } from 'react'
+import { $, $$, Child, useEffect, useMemo } from 'voby'
+import Prism from 'prismjs' // Make sure to import Prism
+import 'prismjs/themes/prism.css' // Import the desired Prism theme CSS
 import ArrowUp from '../../assets/arrow-up.svg'
 import ArrowDown from '../../assets/arrow-down.svg'
-import Prism from 'prismjs'
 
-export const ToggleCode = (props: { children?: ReactNode }) => {
-    const [open, setOpen] = useState(false)
+export const ToggleCode = ({ children }: { children?: Child }) => {
+    const open = $(false)
 
-    //   componentDidUpdate() {
-    //     // eslint-disable-next-line
-    //     Prism.highlightAll();
-    //   }
-
-    const codeBlockRef = useRef()
     useEffect(() => {
-        if (codeBlockRef.current)
-            Prism.highlightAll()
-    }, [codeBlockRef])
+        Prism.highlightAll()
+    })
 
-    const clickHandler = () => setOpen(!open)
+    const clickHandler = () => {
+        open(!open())
+    }
 
-
-    const { children } = props
-    const SVG = open ? ArrowUp : ArrowDown
+    const SVG = useMemo(() => $$(open) ? ArrowUp : ArrowDown)
 
     return <>
-        <div ref={codeBlockRef}
+        <div
             className="toggleCode"
             role="button"
             tabIndex={0}
             onClick={clickHandler}
         >
-            <span>{open ? 'Hide Code Example' : 'Show Code Example'}</span>
-            <img
-                className='ml-[8px] w-[10px]'
-                src={SVG}
-                alt=""
-            />
+            <span>{() => $$(open) ? 'Hide Code Example' : 'Show Code Example'}</span>
+            <img class='ml-[8px] w-[10px] inline-block' src={SVG} alt="" />
+            <div class={[() => $$(open) ? 'display' : 'hidden']}>{children}</div>
         </div>
-        {open ? children : null}
     </>
 }
+

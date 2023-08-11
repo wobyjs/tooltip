@@ -1,4 +1,4 @@
-const codeInstallNpm = '$ npm install react-power-tooltip --save'
+const codeInstallNpm = '$ npm install voby-power-tooltip --save'
 const codeBasicComp = `class Example extends Component {
   state = {
     show: false
@@ -12,7 +12,7 @@ const codeBasicComp = `class Example extends Component {
     return (
       {/* Target element position needs to be RELATIVE */}
       <div 
-        style={{ position: 'relative' }}
+        class='relative'
         onMouseOver={() => this.showTooltip(true)} 
         onMouseLeave={() => this.showTooltip(false)}>
                 

@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const Api = () => <>
     <h1>API Overview</h1>
     <div className="tableContainer">
@@ -47,7 +45,7 @@ export const Api = () => <>
                     <td>&#39;fade&#39;</td>
                     <td>
                         Mount/Unmount anmation. For custom animations see examples for more
-                        <a href="#custom-animations" style={{ color: 'purple', fontSize: '15px' }}> info</a>
+                        <a href="#custom-animations" class='text-[purple] text-[15px]'> info</a>
                         .
                     </td>
                 </tr>
@@ -136,21 +134,21 @@ export const Api = () => <>
                     <td>
                         Vertical or horizontal aligning along the left/right or
                         top/bottom textbox side respectively. See
-                        <a href="#arrow-align" style={{ color: 'purple', fontSize: '15px' }}> examples </a>
+                        <a href="#arrow-align" class='text-[purple] text-[15px]'> examples </a>
                         for more information.
                     </td>
                 </tr>
                 <tr>
                     <td>position</td>
                     <td>
-                        <p style={{ marginTop: '0' }}>
+                        <p class='mt-0'>
                             string: &#39;position1 position2&#39;
                         </p>
                     </td>
                     <td>&#39;right center&#39;</td>
                     <td>
                         Positions tooltip relative to target. See
-                        <a href="#tooltip-positions" style={{ color: 'purple', fontSize: '15px' }}> examples </a>
+                        <a href="#tooltip-positions" class='text-[purple] text-[15px]'> examples </a>
                         for more information.
                     </td>
                 </tr>

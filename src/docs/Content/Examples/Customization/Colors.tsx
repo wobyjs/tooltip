@@ -1,9 +1,8 @@
-import React from 'react'
 import { Tooltip } from '../../../../lib'
 
 export const Colors = () => <>
-    <h3 style={{ width: '95%', marginBottom: '0' }}><strong>Colors</strong></h3>
-    <div className="row">
+    <h3 class='w-[95%] mb-0'><strong>Colors</strong></h3>
+    <div className="row w-[95%] ">
         <div>
             <p>Hover / lines</p>
             <div className="vPlaceHolder">
@@ -11,7 +10,7 @@ export const Colors = () => <>
                     show
                     hoverBackground="bg-[#3b0586]"
                     hoverColor="text-[white]"
-                    lineSeparated="1px solid purple"
+                    lineSeparated="border-b-[1px] border-b-[purple]"
                 >
                     <span>Our Technology</span>
                     <span>Our Story</span>
