@@ -1,8 +1,5 @@
 # voby-power-tooltip
 
-![Travis (.org)](https://img.shields.io/travis/justinrhodes1/voby-power-tooltip.svg)
-![Coveralls github branch](https://img.shields.io/coveralls/github/justinrhodes1/voby-power-tooltip/master.svg) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/voby-power-tooltip.svg)
-
 <img width="250px" src="https://media.giphy.com/media/Rd6sPjQFVHOSwe9rbW/giphy.gif" />
 
 A **powerful** and **elegant** alternative for all your tooltips and menu needs.
