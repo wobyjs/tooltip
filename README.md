@@ -221,22 +221,6 @@ To set up the project:
 2.  `$ npm install`
 3.  `$ npm run dev`
 
-The demo page will then be served on http://localhost:8000/ in watch mode, meaning you don't have refresh the page to see your changes.
-
-## Contributors
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <img src="https://github.com/justinrhodes1.png" width="120">
-        <br />
-        <a href="https://github.com/justinrhodes1">Justin Rhodes<a/>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 ## License
 
 MIT
