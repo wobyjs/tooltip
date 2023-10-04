@@ -1,4 +1,4 @@
-import { $, $$ } from 'voby'
+import { $, $$, useMemo } from 'voby'
 import { Tooltip } from '../../../../lib'
 
 export const AlignPositions = () => {
@@ -8,7 +8,7 @@ export const AlignPositions = () => {
 
     return <div class='relative text-sm w-[250px]'>
         <Tooltip
-            show={() => $$(hover) === 'left'}
+            show={useMemo(() => $$(hover) === 'left')}
             position="left top"
             arrowAlign="center"
             textboxWidth="auto"
@@ -17,7 +17,7 @@ export const AlignPositions = () => {
             <span>Top</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'left'}
+            show={useMemo(() => $$(hover) === 'left')}
             position="left center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -26,7 +26,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'left'}
+            show={useMemo(() => $$(hover) === 'left')}
             position="left bottom"
             arrowAlign="center"
             textboxWidth="auto"
@@ -35,7 +35,7 @@ export const AlignPositions = () => {
             <span>Bottom</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'right'}
+            show={useMemo(() => $$(hover) === 'right')}
             position="right top"
             arrowAlign="center"
             textboxWidth="auto"
@@ -44,7 +44,7 @@ export const AlignPositions = () => {
             <span>Top</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'right'}
+            show={useMemo(() => $$(hover) === 'right')}
             position="right center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -53,7 +53,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'right'}
+            show={useMemo(() => $$(hover) === 'right')}
             position="right bottom"
             arrowAlign="center"
             textboxWidth="auto"
@@ -62,7 +62,7 @@ export const AlignPositions = () => {
             <span>Bottom</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'top'}
+            show={useMemo(() => $$(hover) === 'top')}
             position="top left"
             arrowAlign="center"
             textboxWidth="auto"
@@ -71,7 +71,7 @@ export const AlignPositions = () => {
             <span>Left</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'top'}
+            show={useMemo(() => $$(hover) === 'top')}
             position="top center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -80,7 +80,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'top'}
+            show={useMemo(() => $$(hover) === 'top')}
             position="top right"
             arrowAlign="center"
             textboxWidth="auto"
@@ -89,7 +89,7 @@ export const AlignPositions = () => {
             <span>Right</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'bottom'}
+            show={useMemo(() => $$(hover) === 'bottom')}
             position="bottom left"
             arrowAlign="center"
             textboxWidth="auto"
@@ -98,7 +98,7 @@ export const AlignPositions = () => {
             <span>Left</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'bottom'}
+            show={useMemo(() => $$(hover) === 'bottom')}
             position="bottom center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -107,7 +107,7 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
-            show={() => $$(hover) === 'bottom'}
+            show={useMemo(() => $$(hover) === 'bottom')}
             position="bottom right"
             arrowAlign="center"
             textboxWidth="auto"

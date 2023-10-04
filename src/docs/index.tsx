@@ -1,7 +1,7 @@
 import { useEffect, $ } from 'voby'
 import { render } from 'voby'
 // eslint-disable-next-line
-import Prism from 'prismjs'
+// import Prism from 'prismjs'
 
 import { Header } from './Content/Header'
 import { SideNav } from './Content/SideNav'

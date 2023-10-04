@@ -1,15 +1,15 @@
 import { $, $$, Child, useEffect, useMemo } from 'voby'
-import Prism from 'prismjs' // Make sure to import Prism
-import 'prismjs/themes/prism.css' // Import the desired Prism theme CSS
-import ArrowUp from '../../assets/arrow-up.svg'
-import ArrowDown from '../../assets/arrow-down.svg'
+// import Prism from 'prismjs' // Make sure to import Prism
+// import 'prismjs/themes/prism.css' // Import the desired Prism theme CSS
+import ArrowUp from '../../../svgx/src/assets/arrow-up'
+import ArrowDown from '../../../svgx/src/assets/arrow-down'
 
 export const ToggleCode = ({ children }: { children?: Child }) => {
     const open = $(false)
 
-    useEffect(() => {
-        Prism.highlightAll()
-    })
+    // useEffect(() => {
+    //     Prism.highlightAll()
+    // })
 
     const clickHandler = () => {
         open(!open())

@@ -46,7 +46,8 @@
         "baseUrl": ".",
         "rootDir": "./src",
         "typeRoots": [
-            "types"
+            "types",
+            "voby/dist/types/jsx"
         ],
         // "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
         // "composite": true,

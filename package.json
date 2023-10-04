@@ -1,20 +1,12 @@
 {
-    "name": "voby-power-tooltip",
+    "name": "voby-tooltip",
     "version": "1.0.2",
-    "description": "A powerful tooltip and menu component library for react.",
-    "main": "./lib/index.js",
+    "description": "A powerful tooltip and menu component library for voby.",
+    "main": "./dist/index.cjs.js",
+    "module": "./dist/index.es.js",
+    "browser": "./dist/index.umd.js",
+    "types": "./dist/types/index.d.ts",
     "scripts": {
-        "dev1": "concurrently \"npm run lib:watch\" \"npm run docs\"",
-        "lib": "babel src/lib -d lib --copy-files",
-        "lib:watch": "babel src/lib -w -d lib --copy-files",
-        "docs": "webpack-dev-server --mode development --config webpack/dev.config.js",
-        "docs:prod": "webpack --mode production --config webpack/prod.config.js",
-        "test": "NODE_ENV=test jest --coverage --coverageReporters=text-lcov | coveralls",
-        "test:watch": "jest --watch",
-        "mock:create": "webpack --mode development --config webpack/test.config.js",
-        "lint": "eslint --ext .js,.jsx src/lib",
-        "prepublish": "npm run lib",
-        "postinstall": "node postinstall.js",
         "css:watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
         "css": "tailwindcss -i ./src/input.css -o ./dist/output.css",
         "declaration": "tsc --build --force --declaration --emitDeclarationOnly --verbose",
@@ -27,14 +19,15 @@
         "dev": "run-p css:watch dev:only",
         "build:vite": "vite build",
         "build:watch": "vite build --watch",
-        "preview": "vite preview --host"
+        "preview": "vite preview --host",
+        "icon": "node ./node_modules/svg2tsx/cli/index.js"
     },
     "keywords": [
         "tooltip",
         "notification",
         "menu",
-        "react",
-        "react-component"
+        "voby",
+        "voby-component"
     ],
     "license": "MIT",
     "peerDependencies": {
@@ -42,17 +35,17 @@
     },
     "devDependencies": {
         "concurrently": "^3.5.1",
-        "prismjs": "^1.15.0",
         "puppeteer": "^1.10.0",
         "style-loader": "^0.21.0",
         "tailwindcss": "^3.3.3",
         "vite": "^4.4.8",
-        "vite-plugin-dts": "^2.3.0"
+        "vite-plugin-dts": "^2.3.0",
+        "svg2tsx": "workspace:../svg2tsx"
     },
     "author": "Chi Chong <wongchichong@gmail.com>",
-    "homepage": "https://github.com/wongchichong/voby-power-tooltip",
+    "homepage": "https://github.com/wongchichong/voby-tooltip",
     "repository": {
         "type": "git",
-        "url": "git@github.com:wongchichong/voby-power-tooltip.git"
+        "url": "git@github.com:wongchichong/voby-tooltip.git"
     }
 }

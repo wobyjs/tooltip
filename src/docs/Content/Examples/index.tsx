@@ -34,6 +34,7 @@ import {
     codeMoveUp,
     codeMoveLeft
 } from '../CodeSnippets'
+import { Auto } from './Positions/Auto'
 
 export const Examples = () => <>
     <h1>Examples</h1>
@@ -296,6 +297,31 @@ export const Examples = () => <>
     <div class="flexContainer greyBkgr adjOuterContainer overflow-scroll overflow-y-hidden pb-[140px]">
         <AdjustmentOuter />
     </div>
+    <ToggleCode>
+        <div class="codeRow">
+            <div>
+                <pre>
+                    <code class="language-javascript">
+                        {codeMoveUp}
+                    </code>
+                </pre>
+                <pre>
+                    <code class="language-javascript">
+                        {codeMoveLeft}
+                    </code>
+                </pre>
+                <pre />
+            </div>
+        </div>
+    </ToggleCode>
+
+    <h3 class='leading-[1.5]'>
+        AutoTooltip
+    </h3>
+    <div class="flexContainer greyBkgr adjOuterContainer overflow-scroll overflow-y-hidden pb-[140px]">
+        <Auto />
+    </div>
+
     <ToggleCode>
         <div class="codeRow">
             <div>

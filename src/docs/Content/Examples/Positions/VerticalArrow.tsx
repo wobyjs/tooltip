@@ -1,4 +1,5 @@
 import { Tooltip } from '../../../../lib'
+import { $ } from 'voby'
 
 export const VerticalArrow = () => <>
     <h3 class='w-[95%] mb-0'>

@@ -13,14 +13,14 @@ target element with ease
 
 ## DEMO
 
-Check out the [documentation &amp; demo](https://justinrhodes1.github.io/voby-power-tooltip/) pages to see all use cases.
+Base on [react-power-tooltip](https://justinrhodes1.github.io/react-power-tooltip/) pages to see all use cases.
 
 ## Installation
 
 ### NPM
 
 ```bash
-pnpm install voby-power-tooltip
+pnpm install voby-tooltip
 ```
 
 ## Usage
@@ -28,21 +28,160 @@ pnpm install voby-power-tooltip
 **Important**: Set the position of the hoverable parent component to *relative*.
 
 ```tsx
-import React, { Component } from "react";
-import { Tooltip } from "voby-power-tooltip";
+import { $, $$, useMemo } from 'voby'
+import { Tooltip } from '../../../../lib'
 
-export const Example = () => {
-    const [show, setShow] = useState(false)
+export const AlignPositions = () => {
+    const hover = $<string | boolean>(false)
 
-    const showTooltip = (bool:boolean) => setShow(bool)
+    // const hoverHandler = (side: boolean) => setHover(side)
 
-    return <div class='relative' onMouseOver={() => showTooltip(true)} onMouseLeave={() => showTooltip(false)}>
-            <Tooltip show={show}>
-                <span>Option 1</span>
-                <span>Option 2</span>
-            </Tooltip>
+    return <div class='relative text-sm w-[250px]'>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'left')}
+            position="left top"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Top</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'left')}
+            position="left center"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Center</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'left')}
+            position="left bottom"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Bottom</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'right')}
+            position="right top"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Top</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'right')}
+            position="right center"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Center</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'right')}
+            position="right bottom"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Bottom</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'top')}
+            position="top left"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Left</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'top')}
+            position="top center"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Center</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'top')}
+            position="top right"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Right</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'bottom')}
+            position="bottom left"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Left</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'bottom')}
+            position="bottom center"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Center</span>
+        </Tooltip>
+        <Tooltip
+            show={useMemo(() => $$(hover) === 'bottom')}
+            position="bottom right"
+            arrowAlign="center"
+            textboxWidth="auto"
+            static
+        >
+            <span>Right</span>
+        </Tooltip>
+        <div class="square purpleGradient">
+            <div class='absolute w-full h-full flex items-center justify-center text-[15px]'>
+                <div class='w-[70%] flex flex-row justify-between'>
+                    <span>Left</span>
+                    <span>Right</span>
+                </div>
+            </div>
+            <div class='absolute w-full h-full flex items-center justify-center text-[15px]'>
+                <div class='h-[70%] flex flex-col justify-between items-center'>
+                    <span>Top</span>
+                    <span>Bottom</span>
+                </div>
+            </div>
+            <div
+                class="left"
+                onMouseEnter={() => hover('left')}
+                onMouseLeave={() => hover(false)}
+            />
+            <div
+                class="top"
+                onMouseEnter={() => hover('top')}
+                onMouseLeave={() => hover(false)}
+            />
+            <div
+                class="right"
+                onMouseEnter={() => hover('right')}
+                onMouseLeave={() => hover(false)}
+            />
+            <div
+                class="bottom"
+                onMouseEnter={() => hover('bottom')}
+                onMouseLeave={() => hover(false)}
+            />
         </div>
+    </div>
 }
+
 ```
 ## API
 

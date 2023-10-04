@@ -6,7 +6,7 @@ const config = defineConfig({
     build: {
         minify: false,
         lib: {
-            entry: ["./src/docs/index.html"],
+            entry: ["./index.html"],
             name: "voby-power-tooltip",
             formats: ['cjs', 'es', 'umd'],
             fileName: (format: string, entryName: string) => `${entryName}.${format}.js`

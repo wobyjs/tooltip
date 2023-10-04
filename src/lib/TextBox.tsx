@@ -1,6 +1,4 @@
-import { Child, useMemo } from 'voby'
-import { $, $$, useEffect, Observable, ObservableMaybe, jsx, getMeta, store } from 'voby'
-import { cloneElement } from 'voby'
+import { $, $$, useEffect, cloneElement, Child, useMemo, Observable, ObservableMaybe, jsx, getMeta, store, type JSX } from 'voby'
 
 type _Align = 'start' | 'end' | 'center' | 'bottom' | 'top' | 'right' | 'left'
 export type Align = _Align | `v-${_Align}` | `h-${_Align}`
@@ -10,7 +8,7 @@ export const isSide = (side: ObservableMaybe<Side>, str: Side) => $$(side) === s
 export const isAlign = (align: ObservableMaybe<Align>, str: Align) => $$(align) === str
 export const isAlignA = (position, str: string) => $$(position) === str
 
-type TooltipType = {
+type TextboxType = {
     // lineSeparated?: boolean | string, position?: string,
     // /** tailwind */
     hoverBackground?: ObservableMaybe<string>, backgroundColor?: ObservableMaybe<string>, arrowAlign?: ObservableMaybe<Align>,
@@ -43,16 +41,16 @@ type TooltipType = {
         right: number
     },
     children?: Child
+
 }
 
 
-export const TextBox = (props: TooltipType) => {
+export const TextBox = (props: TextboxType): JSX.Element => {
     const hoverIndex = $<number>(null)
     const firstH = $<number>(null)
     const lastH = $<number>(null)
     const totH = $<number>(null)
 
-    const textBoxRef = $(null)
     const spanHeightsRef = store({})
 
     store.on(spanHeightsRef, () => {

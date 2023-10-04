@@ -1,6 +1,6 @@
-import { $$, ObservableMaybe, useMemo } from 'voby' //
+import { $$, ObservableMaybe, useMemo, type JSX } from 'voby' //
 
-export const Arrow = ({ isHovered, hovBkg, bkgCol, flat }: { isHovered: ObservableMaybe<boolean>, hovBkg: ObservableMaybe<string>, bkgCol: ObservableMaybe<string>, flat?: ObservableMaybe<boolean> }) => {
+export const Arrow = ({ isHovered, hovBkg, bkgCol, flat }: { isHovered: ObservableMaybe<boolean>, hovBkg: ObservableMaybe<string>, bkgCol: ObservableMaybe<string>, flat?: ObservableMaybe<boolean> }): JSX.Element => {
     const backgroundColor = useMemo(() => $$(isHovered) ? $$(hovBkg) : $$(bkgCol))
     // const boxShadow = flat ? null : 'shadow-[rgba(0,0,0,.18)0_0_0_1px]'
     const boxShadow = useMemo(() => $$(flat) ? null : '[box-shadow:rgba(0,0,0,0.18)0px_0px_0px_1px]')
