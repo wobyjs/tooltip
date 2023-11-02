@@ -1,8 +1,9 @@
 //import cssRules from './Tooltip/styles'
 import '../../dist/output.css'
 
-import { $, $$, Observable, useEffect } from 'voby'
-import { } from 'voby/dist/types/jsx/types'
+import { $, $$, Observable, useEffect } from 'woby'
+
+import type { JSX } from 'woby/jsx-runtime'
 import { Tooltip, TooltipType } from './Tooltip'
 
 

@@ -1,4 +1,4 @@
-import { $ } from 'voby'
+import { $ } from 'woby'
 import { Tooltip } from '../../../../lib'
 
 export const Bounce = () => {

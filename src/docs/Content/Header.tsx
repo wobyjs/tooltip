@@ -5,7 +5,7 @@ export const Header = () => <div class="flexContainer purpleGradient header">
     <div class="ribbon">
         <a
             class='text-[white]'
-            href="https://github.com/justinrhodes1/voby-power-tooltip/fork"
+            href="https://github.com/justinrhodes1/woby-power-tooltip/fork"
         >
             Fork me on GitHub
         </a>
@@ -35,7 +35,7 @@ export const Header = () => <div class="flexContainer purpleGradient header">
     <br />
     <h2>A flexible, lightweight tooltip &amp; menu library. </h2>
     <div class="github-btn-bar flex flex-row justify-between w-[165px]">
-        <a class="github-button" href="https://github.com/justinrhodes1/voby-power-tooltip" data-size="large" data-show-count="true" aria-label="Star justinrhodes1/voby-power-tooltip on GitHub">Star</a>
-        <a class="github-button" href="https://github.com/justinrhodes1/voby-power-tooltip/fork" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork justinrhodes1/voby-power-tooltip on GitHub">Fork</a>
+        <a class="github-button" href="https://github.com/justinrhodes1/woby-power-tooltip" data-size="large" data-show-count="true" aria-label="Star justinrhodes1/woby-power-tooltip on GitHub">Star</a>
+        <a class="github-button" href="https://github.com/justinrhodes1/woby-power-tooltip/fork" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork justinrhodes1/woby-power-tooltip on GitHub">Fork</a>
     </div>
 </div>

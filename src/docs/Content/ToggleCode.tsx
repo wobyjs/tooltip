@@ -1,4 +1,4 @@
-import { $, $$, Child, useEffect, useMemo } from 'voby'
+import { $, $$, Child, useEffect, useMemo } from 'woby'
 // import Prism from 'prismjs' // Make sure to import Prism
 // import 'prismjs/themes/prism.css' // Import the desired Prism theme CSS
 import ArrowUp from '../../../svgx/src/assets/arrow-up'

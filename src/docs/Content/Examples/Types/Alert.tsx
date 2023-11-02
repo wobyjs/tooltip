@@ -1,4 +1,4 @@
-import { useEffect, $ } from 'voby'
+import { useEffect, $ } from 'woby'
 import { Tooltip } from '../../../../lib'
 import logo from '../../../../assets/logo.svg'
 

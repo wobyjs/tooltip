@@ -1,4 +1,4 @@
-import { $, $$, useMemo } from 'voby'
+import { $, $$, useMemo } from 'woby'
 import { Tooltip } from '../../../../lib'
 
 export const AlignPositions = () => {

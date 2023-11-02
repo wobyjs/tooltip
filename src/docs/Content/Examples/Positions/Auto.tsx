@@ -1,5 +1,5 @@
 import { Tooltip } from '../../../../lib'
-import { $ } from 'voby'
+import { $ } from 'woby'
 
 const ref = $<HTMLDivElement>()
 export const Auto = () => <>

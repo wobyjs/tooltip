@@ -1,4 +1,4 @@
-# voby-power-tooltip
+# woby-tooltip
 
 <img width="250px" src="https://media.giphy.com/media/Rd6sPjQFVHOSwe9rbW/giphy.gif" />
 
@@ -11,16 +11,19 @@ target element with ease
 - Tailwind CSS
 - React Hooks
 
-## DEMO
+Ported from [react-power-tooltip](https://justinrhodes1.github.io/react-power-tooltip/) pages to see all use cases.
 
-Base on [react-power-tooltip](https://justinrhodes1.github.io/react-power-tooltip/) pages to see all use cases.
+## DEMO
+```
+pnpm dev
+```
 
 ## Installation
 
 ### NPM
 
 ```bash
-pnpm install voby-tooltip
+pnpm install woby-tooltip
 ```
 
 ## Usage
@@ -28,8 +31,8 @@ pnpm install voby-tooltip
 **Important**: Set the position of the hoverable parent component to *relative*.
 
 ```tsx
-import { $, $$, useMemo } from 'voby'
-import { Tooltip } from '../../../../lib'
+import { $, $$, useMemo } from 'woby'
+import { Tooltip } from 'woby-tooltip'
 
 export const AlignPositions = () => {
     const hover = $<string | boolean>(false)
@@ -213,7 +216,7 @@ export const AlignPositions = () => {
 
 ## Development
 
-You're welcome to contribute to voby-power-tooltip.
+You're welcome to contribute to woby-power-tooltip.
 
 To set up the project:
 

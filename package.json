@@ -1,5 +1,5 @@
 {
-    "name": "voby-tooltip",
+    "name": "woby-tooltip",
     "version": "1.0.2",
     "description": "A powerful tooltip and menu component library for voby.",
     "main": "./dist/index.cjs.js",
@@ -26,26 +26,26 @@
         "tooltip",
         "notification",
         "menu",
-        "voby",
-        "voby-component"
+        "woby",
+        "woby-component"
     ],
     "license": "MIT",
     "peerDependencies": {
-        "voby": "workspace:../woby"
+        "woby": "workspace:../woby"
     },
     "devDependencies": {
-        "concurrently": "^3.5.1",
-        "puppeteer": "^1.10.0",
+        "concurrently": "^3.6.1",
+        "puppeteer": "^1.20.0",
         "style-loader": "^0.21.0",
+        "svg2tsx": "workspace:../svg2tsx",
         "tailwindcss": "^3.3.3",
-        "vite": "^4.4.8",
-        "vite-plugin-dts": "^2.3.0",
-        "svg2tsx": "workspace:../svg2tsx"
+        "vite": "^4.4.11",
+        "vite-plugin-dts": "^2.3.0"
     },
     "author": "Chi Chong <wongchichong@gmail.com>",
-    "homepage": "https://github.com/wongchichong/voby-tooltip",
+    "homepage": "https://github.com/wongchichong/woby-tooltip",
     "repository": {
         "type": "git",
-        "url": "git@github.com:wongchichong/voby-tooltip.git"
+        "url": "git@github.com:wongchichong/woby-tooltip.git"
     }
 }

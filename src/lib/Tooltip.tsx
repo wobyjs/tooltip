@@ -1,4 +1,5 @@
-import { $$, $, useEffect, ObservableMaybe, Observable, isObservable, useMemo, getMeta, type JSX } from 'voby'
+import { $$, $, useEffect, ObservableMaybe, Observable, isObservable, useMemo, getMeta, type JSX } from 'woby'
+
 import { Align, Side, TextBox, isSide } from './TextBox'
 import { Arrow } from './Arrow'
 
@@ -33,7 +34,7 @@ export type TooltipType = {
     children?: JSX.Element
 }
 
-export const Tooltip = <T extends HTMLElement>(properties: TooltipType & { parentRef?: Observable<HTMLElement>, parent?: JSX.Child /* | ((props: { ref: Refs }) => Child), */ } = {}): JSX.Element => {
+export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTMLAttributes<HTMLDivElement> & { parentRef?: Observable<HTMLElement>, parent?: JSX.Child /* | ((props: { ref: Refs }) => Child), */ } = {}): JSX.Element => {
     const props = {
         /** tailwind */
         hoverBackground: 'bg-[#ececec]',
@@ -50,7 +51,7 @@ export const Tooltip = <T extends HTMLElement>(properties: TooltipType & { paren
         padding: 'py-[15px] px-[20px]',
         borderRadius: 'rounded-[5px]',
         shadowColor: 'rgba(0,0,0,0.251)', shadowShape: '0 8px 15px', moveDown: '0px', moveRight: '0px', moveLeft: '0px', moveUp: '0px',
-        position: 'right center', arrowAlign: $<Align>('start'), textAlign: 'left', fontFamily: 'inherit', fontWeight: 'bold',
+        position: 'bottom center', arrowAlign: $<Align>('start'), textAlign: 'left', fontFamily: 'inherit', fontWeight: 'bold',
 
         zIndex: '100', animation: '', show: false, ...properties
     }
@@ -59,6 +60,7 @@ export const Tooltip = <T extends HTMLElement>(properties: TooltipType & { paren
         hoverBackground, backgroundColor,
         moveDown, moveRight, moveLeft, moveUp,
         textAlign, fontFamily, fontWeight, fontSize, color, zIndex, animation, flat, parentRef: pf, parent: Parent,
+        class: cls, className
         // shadowColor, shadowShape, textboxWidth, padding, borderRadius, hoverColor,
     } = props
 
@@ -259,7 +261,7 @@ export const Tooltip = <T extends HTMLElement>(properties: TooltipType & { paren
     ) : null
     )
 
-    return useMemo(() => $$(Parent) ? <div class="relative" ref={parentRef}>{Parent}{e}</div> : e)
+    return useMemo(() => $$(Parent) ? <div class={["relative", cls, className]} ref={parentRef}>{Parent}{e}</div> : e)
 }
 
 

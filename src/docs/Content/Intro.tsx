@@ -7,17 +7,17 @@ export const Intro = () => <>
     <div class='mt-[15px]'>
         <img
             class='inline-block'
-            src="https://img.shields.io/travis/justinrhodes1/voby-power-tooltip.svg"
+            src="https://img.shields.io/travis/justinrhodes1/woby-power-tooltip.svg"
             alt=""
         />
         <img
             class='my-0 mx-[20px] inline-block'
-            src="https://img.shields.io/coveralls/github/justinrhodes1/voby-power-tooltip/master.svg"
+            src="https://img.shields.io/coveralls/github/justinrhodes1/woby-power-tooltip/master.svg"
             alt=""
         />
         <img
             class='inline-block'
-            src="https://img.shields.io/bundlephobia/minzip/voby-power-tooltip.svg"
+            src="https://img.shields.io/bundlephobia/minzip/woby-power-tooltip.svg"
             alt=""
         />
     </div>
@@ -48,7 +48,7 @@ export const Intro = () => <>
 
     <p class='leading-[1.5] font-bold'>
         We are always open new ideas and improvements. Contribute on
-        <a href="https://github.com/justinrhodes1/voby-power-tooltip/blob/master/CONTRIBUTING.md" class='text-[16px] text-[#680988]'> GitHub</a>
+        <a href="https://github.com/justinrhodes1/woby-power-tooltip/blob/master/CONTRIBUTING.md" class='text-[16px] text-[#680988]'> GitHub</a>
         !
     </p>
     <h1 class='pt-[30px]'>Installation</h1>

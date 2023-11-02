@@ -1,4 +1,5 @@
-import { $, $$, useEffect, cloneElement, Child, useMemo, Observable, ObservableMaybe, jsx, getMeta, store, type JSX } from 'voby'
+import { $, $$, useEffect, cloneElement, Child, useMemo, Observable, ObservableMaybe, jsx, getMeta, store, type JSX } from 'woby'
+
 
 type _Align = 'start' | 'end' | 'center' | 'bottom' | 'top' | 'right' | 'left'
 export type Align = _Align | `v-${_Align}` | `h-${_Align}`
@@ -254,7 +255,7 @@ export const TextBox = (props: TextboxType): JSX.Element => {
             <div
                 class={[`relative z-[2] 
 [&_span]:block [&_span]:cursor-pointer [&_span]:box-border
-[&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-60 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px] }
+[&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px] }
 `, backgroundColor, borderRadius]}
                 onMouseLeave={unsetHover}
             >

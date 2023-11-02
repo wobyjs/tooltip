@@ -1,4 +1,5 @@
-import { $$, ObservableMaybe, useMemo, type JSX } from 'voby' //
+import { $$, ObservableMaybe, useMemo, type JSX } from 'woby'
+//
 
 export const Arrow = ({ isHovered, hovBkg, bkgCol, flat }: { isHovered: ObservableMaybe<boolean>, hovBkg: ObservableMaybe<string>, bkgCol: ObservableMaybe<string>, flat?: ObservableMaybe<boolean> }): JSX.Element => {
     const backgroundColor = useMemo(() => $$(isHovered) ? $$(hovBkg) : $$(bkgCol))

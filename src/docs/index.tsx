@@ -1,5 +1,5 @@
-import { useEffect, $ } from 'voby'
-import { render } from 'voby'
+import { useEffect, $ } from 'woby'
+import { render } from 'woby'
 // eslint-disable-next-line
 // import Prism from 'prismjs'
 
@@ -26,10 +26,10 @@ import './prism.css'
 
 export const Demo = () => {
     const codeBlockRef = $()
-    useEffect(() => {
-        if (codeBlockRef)
-            Prism.highlightAll()
-    })
+    // useEffect(() => {
+    //     if (codeBlockRef)
+    //         Prism.highlightAll()
+    // })
     // usePrismHighlight(codeBlockRef)
     return <div class="flexContainer">
         <Header />

@@ -1,6 +1,6 @@
-import { $, Ref } from 'voby'
+import { $, Ref } from 'woby'
 import { Tooltip } from '../../../../lib'
-import { Refs } from 'voby/dist/types/types'
+import { Refs } from 'woby/dist/types/types'
 
 export const FadeIn = () => {
     // const show = $(false)
