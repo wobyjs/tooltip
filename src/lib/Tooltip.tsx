@@ -34,7 +34,7 @@ export type TooltipType = {
     children?: JSX.Element
 }
 
-export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTMLAttributes<HTMLDivElement> & { parentRef?: Observable<HTMLElement>, parent?: JSX.Child /* | ((props: { ref: Refs }) => Child), */ } = {}): JSX.Element => {
+export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTMLAttributes<HTMLDivElement> & { parentRef?: Observable<HTMLElement>, parent?: JSX.Child, containerClass?: JSX.Class /* | ((props: { ref: Refs }) => Child), */ } = {}): JSX.Element => {
     const props = {
         /** tailwind */
         hoverBackground: 'bg-[#ececec]',
@@ -48,7 +48,6 @@ export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTM
         fontSize: '[font-size:inherit]',
         /** tailwind */
         color: 'text-inherit',
-        padding: 'py-[15px] px-[20px]',
         borderRadius: 'rounded-[5px]',
         shadowColor: 'rgba(0,0,0,0.251)', shadowShape: '0 8px 15px', moveDown: '0px', moveRight: '0px', moveLeft: '0px', moveUp: '0px',
         position: 'bottom center', arrowAlign: $<Align>('start'), textAlign: 'left', fontFamily: 'inherit', fontWeight: 'bold',
@@ -60,8 +59,8 @@ export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTM
         hoverBackground, backgroundColor,
         moveDown, moveRight, moveLeft, moveUp,
         textAlign, fontFamily, fontWeight, fontSize, color, zIndex, animation, flat, parentRef: pf, parent: Parent,
-        class: cls, className
         // shadowColor, shadowShape, textboxWidth, padding, borderRadius, hoverColor,
+        containerClass,
     } = props
 
     const show = /* $$(parent) ? props.show : */ (isObservable(props.show) ? props.show : $(props.show))
@@ -235,7 +234,7 @@ export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTM
         animation: () => $$(show) ? `rpt-${$$(animation)} 0.2s` : `rpt-${$$(animation)}-out 0.15s`
     }
 
-    const e = useMemo(() => ((!$$(animation) && $$(show)) || ($$(show) && $$(mount))) ? (
+    const e = useMemo(() => ((!$$(animation) && $$(show) && $$(props.children)) || ($$(show) && $$(mount)) && $$(props.children)) ? (
         <div
             className={classes}
             style={tooltipStyle}
@@ -261,7 +260,7 @@ export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTM
     ) : null
     )
 
-    return useMemo(() => $$(Parent) ? <div class={["relative", cls, className]} ref={parentRef}>{Parent}{e}</div> : e)
+    return useMemo(() => $$(Parent) ? <div class={[containerClass ?? 'relative']} ref={parentRef}>{Parent}{e}</div> : e)
 }
 
 

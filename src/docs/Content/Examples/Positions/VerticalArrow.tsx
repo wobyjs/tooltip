@@ -14,6 +14,10 @@ export const VerticalArrow = () => <>
             </p>
             <div class="vPlaceHolder">
                 <Tooltip
+                    class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
+                    position='right center'
+                    padding='py-[15px] px-[20px]'
                     show
                     textboxWidth="auto"
                     lineSeparated
@@ -30,6 +34,10 @@ export const VerticalArrow = () => <>
             </p>
             <div class="vPlaceHolder">
                 <Tooltip
+                    class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
+                    position='right center'
+                    padding='py-[15px] px-[20px]'
                     show
                     arrowAlign="center"
                     textboxWidth="auto"
@@ -47,6 +55,10 @@ export const VerticalArrow = () => <>
             </p>
             <div class="vPlaceHolder">
                 <Tooltip
+                    class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
+                    position='right center'
+                    padding='py-[15px] px-[20px]'
                     show
                     arrowAlign="end"
                     textboxWidth="auto"

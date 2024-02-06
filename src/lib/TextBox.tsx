@@ -42,11 +42,10 @@ type TextboxType = {
         right: number
     },
     children?: Child
-
 }
 
 
-export const TextBox = (props: TextboxType): JSX.Element => {
+export const TextBox = (props: TextboxType & JSX.HTMLAttributes<HTMLDivElement>): JSX.Element => {
     const hoverIndex = $<number>(null)
     const firstH = $<number>(null)
     const lastH = $<number>(null)
@@ -100,7 +99,8 @@ export const TextBox = (props: TextboxType): JSX.Element => {
         color,
         alert,
         flat,
-        children
+        children,
+        class: cls, className
     } = props
 
     const numberChildren = Array.isArray(children) ? children.length : 1
@@ -237,7 +237,7 @@ export const TextBox = (props: TextboxType): JSX.Element => {
 
     return (
         <div
-            class={[`absolute animation-none`, alertStyle]}
+            class={[`absolute animation-none`, alertStyle, cls ?? className]}
             style={{
                 ...boxStyle,
                 boxShadow: alertShadow,
@@ -253,14 +253,11 @@ export const TextBox = (props: TextboxType): JSX.Element => {
                 }}
             />
             <div
-                class={[`relative z-[2] 
-[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
-[&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px] }
-`, backgroundColor, borderRadius]}
+                class={[`relative z-[2] w-full`, backgroundColor, borderRadius]}
                 onMouseLeave={unsetHover}
             >
                 <div
-                    class={[!tpStatic ? '[&_span]:cursor-pointer' : null, borderRadius, 'overflow-hidden']}>
+                    class={[!tpStatic ? '[&_span]:cursor-pointer w-full' : null, borderRadius, 'overflow-hidden']}>
                     {adjChildren}
                 </div>
             </div>

@@ -17,6 +17,9 @@ export const Header = () => <div class="flexContainer purpleGradient header">
         >
             tooltip
             <Tooltip
+                class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
+                padding='py-[15px] px-[20px]'
                 show
                 color="text-[black]"
                 arrowAlign="center"

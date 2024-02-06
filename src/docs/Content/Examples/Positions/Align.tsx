@@ -8,7 +8,10 @@ export const AlignPositions = () => {
 
     return <div class='relative text-sm w-[250px]'>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'left')}
+            padding='py-[15px] px-[20px]'
             position="left top"
             arrowAlign="center"
             textboxWidth="auto"
@@ -17,7 +20,10 @@ export const AlignPositions = () => {
             <span>Top</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'left')}
+            padding='py-[15px] px-[20px]'
             position="left center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -26,7 +32,10 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'left')}
+            padding='py-[15px] px-[20px]'
             position="left bottom"
             arrowAlign="center"
             textboxWidth="auto"
@@ -35,7 +44,10 @@ export const AlignPositions = () => {
             <span>Bottom</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'right')}
+            padding='py-[15px] px-[20px]'
             position="right top"
             arrowAlign="center"
             textboxWidth="auto"
@@ -44,7 +56,10 @@ export const AlignPositions = () => {
             <span>Top</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'right')}
+            padding='py-[15px] px-[20px]'
             position="right center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -53,7 +68,10 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'right')}
+            padding='py-[15px] px-[20px]'
             position="right bottom"
             arrowAlign="center"
             textboxWidth="auto"
@@ -62,7 +80,10 @@ export const AlignPositions = () => {
             <span>Bottom</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'top')}
+            padding='py-[15px] px-[20px]'
             position="top left"
             arrowAlign="center"
             textboxWidth="auto"
@@ -71,7 +92,10 @@ export const AlignPositions = () => {
             <span>Left</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'top')}
+            padding='py-[15px] px-[20px]'
             position="top center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -80,7 +104,10 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'top')}
+            padding='py-[15px] px-[20px]'
             position="top right"
             arrowAlign="center"
             textboxWidth="auto"
@@ -89,7 +116,10 @@ export const AlignPositions = () => {
             <span>Right</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'bottom')}
+            padding='py-[15px] px-[20px]'
             position="bottom left"
             arrowAlign="center"
             textboxWidth="auto"
@@ -98,7 +128,10 @@ export const AlignPositions = () => {
             <span>Left</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'bottom')}
+            padding='py-[15px] px-[20px]'
             position="bottom center"
             arrowAlign="center"
             textboxWidth="auto"
@@ -107,7 +140,10 @@ export const AlignPositions = () => {
             <span>Center</span>
         </Tooltip>
         <Tooltip
+            class='[&_span]:block [&_span]:cursor-pointer [&_span]:box-border
+    [&_span_p]:text-[90%] [&_span_p]:font-normal [&_span_p]:leading-[12px] [&_span_p]:text-inherit [&_span_p]:opacity-0 [&_span_p]:p-0 [&_span_p]:m-0 [&_span_p]:mt-[6px]'
             show={useMemo(() => $$(hover) === 'bottom')}
+            padding='py-[15px] px-[20px]'
             position="bottom right"
             arrowAlign="center"
             textboxWidth="auto"
