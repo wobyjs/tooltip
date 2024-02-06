@@ -1,6 +1,6 @@
 {
     "name": "woby-tooltip",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A powerful tooltip and menu component library for woby.",
     "main": "./dist/index.cjs.js",
     "module": "./dist/index.es.js",
@@ -31,13 +31,13 @@
     ],
     "license": "MIT",
     "peerDependencies": {
-        "woby": "workspace:../woby"
+        "woby": "workspace:^"
     },
     "devDependencies": {
         "concurrently": "^3.6.1",
         "puppeteer": "^1.20.0",
         "style-loader": "^0.21.0",
-        "svg2tsx": "workspace:../svg2tsx",
+        "svg2tsx": "workspace:^",
         "tailwindcss": "^3.4.1",
         "vite": "^4.5.2",
         "vite-plugin-dts": "^2.3.0"
