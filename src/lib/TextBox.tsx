@@ -1,4 +1,4 @@
-import { $, $$, useEffect, cloneElement, Child, useMemo, Observable, ObservableMaybe, jsx, getMeta, store, type JSX } from 'woby'
+import { $, $$, useEffect, Child, useMemo, Observable, ObservableMaybe, jsx, store, type JSX } from 'woby'
 
 
 type _Align = 'start' | 'end' | 'center' | 'bottom' | 'top' | 'right' | 'left'
@@ -109,21 +109,6 @@ export const TextBox = (props: TextboxType & JSX.HTMLAttributes<HTMLDivElement>)
     const adjChildren = [children].flat().map((child, index) => {
         const hover = useMemo(() => !tpStatic && $$(hoverIndex) === index)
         const nhover = useMemo(() => !$$(hover))
-
-        //     whiteSpace: undefined,
-        //     color: undefined,
-        //     borderBottom: undefined,
-        // }
-
-
-        // if (!tpStatic && $$(hoverIndex) === index) {
-        //     class.push(hoverColor)
-        //     class.push(hoverBackground)
-        // } else {
-        //     class.push(color)
-        //     class.push(backgroundColor)
-        // }
-
         const style = { borderBottom: () => ($$(lineSeparated) && lastIndex !== index) ? $$(lineSeparated) : undefined }
 
         const childProps = {
@@ -137,7 +122,7 @@ export const TextBox = (props: TextboxType & JSX.HTMLAttributes<HTMLDivElement>)
             // style,
             onMouseOver: () => onSpanHover(index, lastIndex, numberChildren)
         }
-        return cloneElement(child, childProps)
+        return jsx(child, {...childProps})
     })
     const calcHPos = (align: ObservableMaybe<Align>, left: string, center: string, right: string) => {
         return isAlign(align, 'center')
