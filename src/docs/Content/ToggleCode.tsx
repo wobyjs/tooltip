@@ -1,8 +1,8 @@
 import { $, $$, Child, useEffect, useMemo } from 'woby'
 // import Prism from 'prismjs' // Make sure to import Prism
 // import 'prismjs/themes/prism.css' // Import the desired Prism theme CSS
-import ArrowUp from '../../../svgx/src/assets/arrow-up'
-import ArrowDown from '../../../svgx/src/assets/arrow-down'
+import ArrowUp from './svgx/src/assets/arrow-up'
+import ArrowDown from './svgx/src/assets/arrow-down'
 
 export const ToggleCode = ({ children }: { children?: Child }) => {
     const open = $(false)

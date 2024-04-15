@@ -4,7 +4,7 @@ import { Align, Side, TextBox, isSide } from './TextBox'
 import { Arrow } from './Arrow'
 
 //import cssRules from './Tooltip/styles'
-import '../../dist/output.css'
+import '../dist/output.css'
 
 export type TooltipType = {
     /** tailwind

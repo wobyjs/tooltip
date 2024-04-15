@@ -122,7 +122,8 @@ export const TextBox = (props: TextboxType & JSX.HTMLAttributes<HTMLDivElement>)
             // style,
             onMouseOver: () => onSpanHover(index, lastIndex, numberChildren)
         }
-        return jsx(child, {...childProps})
+        //@ts-ignore
+        return jsx(child, { ...childProps })
     })
     const calcHPos = (align: ObservableMaybe<Align>, left: string, center: string, right: string) => {
         return isAlign(align, 'center')
