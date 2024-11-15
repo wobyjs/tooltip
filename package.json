@@ -24,7 +24,7 @@
         "build:vite": "vite build",
         "build:watch": "vite build --watch",
         "preview": "vite preview --host",
-        "icon": "node ./node_modules/svg2tsx/cli/index.js"
+        "icon//": "node ./node_modules/svg2tsx/cli/index.js"
     },
     "keywords": [
         "tooltip",
