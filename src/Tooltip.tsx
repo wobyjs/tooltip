@@ -14,20 +14,20 @@ const tooltip = `inline-block relative
 [&:hover_.tpcontents]:visible [&:hover_.tpcontents]:opacity-100
 `
 
-const topDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const topDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
 const top = `absolute z-[99999999] left-2/4 -top-5 `
 
 const top_i = `absolute overflow-hidden top-full after:content-[''] after:absolute after:-translate-x-2/4 after:-translate-y-2/4 after:rotate-45 after:left-2/4 `
 
-const rightDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const rightDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
 const right = `absolute z-[99999999] ml-5 left-full top-2/4 `
 const right_i = `absolute overflow-hidden right-full after:content-[''] after:absolute after:translate-x-2/4 after:-translate-y-2/4 after:-rotate-45 after:left-0 after:top-2/4 `
 
-const bottomDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const bottomDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
 const bottom = `absolute z-[99999999] left-2/4 top-10 `
 const bottom_i = `absolute overflow-hidden bottom-full after:content-[''] after:absolute after:-translate-x-2/4 after:translate-y-2/4 after:rotate-45 after:left-2/4 `
 
-const leftDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const leftDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
 const left = `absolute z-[99999999] mr-5 right-full top-2/4 `
 const left_i = `absolute overflow-hidden left-full after:content-[''] after:absolute after:-translate-x-2/4 after:-translate-y-2/4 after:-rotate-45 after:left-0 after:top-2/4 `
 
