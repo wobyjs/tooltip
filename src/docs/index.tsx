@@ -1,7 +1,5 @@
 import { useEffect, $ } from 'woby'
 import { render } from 'woby'
-// eslint-disable-next-line
-// import Prism from 'prismjs'
 
 import '../../dist/output.css'
 import { Tooltip, TooltipContent } from '../Tooltip'
@@ -71,6 +69,12 @@ export const Demo = () => {
             </tbody>
         </table>
 
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <br />
         <br />
         <br />

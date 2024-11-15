@@ -1,229 +1,116 @@
 # woby-tooltip
 
-<img width="250px" src="https://media.giphy.com/media/Rd6sPjQFVHOSwe9rbW/giphy.gif" />
+### Tooltip Component Documentation
 
-A **powerful** and **elegant** alternative for all your tooltips and menu needs.
+This documentation explains the `Tooltip` and `TooltipContent` components designed for flexible tooltip positioning and styling in a web application using **Woby.js** and **Tailwind CSS**.
 
-- **Different Types** - For every use context: Choose between _Hoverable_, _Static_ &amp; _Alert_ tooltips.
-- **Fully Customizable** - Easily change default settings via props
-- **Reliable Positioning** - Align your tooltip to your
-target element with ease
-- Tailwind CSS
-- React Hooks
+---
 
-Ported from [react-power-tooltip](https://justinrhodes1.github.io/react-power-tooltip/) pages to see all use cases.
+### **Overview**
 
-## DEMO
-```
-pnpm dev
-```
+This tooltip system provides:
+- **Dynamic positioning** (`top`, `right`, `bottom`, `left`).
+- **Customizable styles** for tooltips and arrows.
+- **Automatic tooltip visibility** on hover.
+- Integration with **Tailwind CSS** and **Woby.js observables** for reactivity.
 
-## Installation
+---
 
-### NPM
+### Installation
 
-```bash
-pnpm install woby-tooltip
+```ps
+pnpm i woby woby-styled use-woby woby-tooltip
 ```
 
-## Usage
+### **Usage**
 
-**Important**: Set the position of the hoverable parent component to *relative*.
+#### **Basic Tooltip Example**
 
 ```tsx
-import { $, $$, useMemo } from 'woby'
-import { Tooltip } from 'woby-tooltip'
+import { Tooltip, TooltipContent } from './Tooltip';
 
-export const AlignPositions = () => {
-    const hover = $<string | boolean>(false)
+const App = () => (
+  <div class="flex items-center justify-center h-screen">
+    <Tooltip>
+      Hover me
+      <TooltipContent position="top">
+        <p>This is a tooltip!</p>
+      </TooltipContent>
+    </Tooltip>
+  </div>
+);
 
-    // const hoverHandler = (side: boolean) => setHover(side)
-
-    return <div class='relative text-sm w-[250px]'>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'left')}
-            position="left top"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Top</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'left')}
-            position="left center"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Center</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'left')}
-            position="left bottom"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Bottom</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'right')}
-            position="right top"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Top</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'right')}
-            position="right center"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Center</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'right')}
-            position="right bottom"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Bottom</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'top')}
-            position="top left"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Left</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'top')}
-            position="top center"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Center</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'top')}
-            position="top right"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Right</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'bottom')}
-            position="bottom left"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Left</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'bottom')}
-            position="bottom center"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Center</span>
-        </Tooltip>
-        <Tooltip
-            show={useMemo(() => $$(hover) === 'bottom')}
-            position="bottom right"
-            arrowAlign="center"
-            textboxWidth="auto"
-            static
-        >
-            <span>Right</span>
-        </Tooltip>
-        <div class="square purpleGradient">
-            <div class='absolute w-full h-full flex items-center justify-center text-[15px]'>
-                <div class='w-[70%] flex flex-row justify-between'>
-                    <span>Left</span>
-                    <span>Right</span>
-                </div>
-            </div>
-            <div class='absolute w-full h-full flex items-center justify-center text-[15px]'>
-                <div class='h-[70%] flex flex-col justify-between items-center'>
-                    <span>Top</span>
-                    <span>Bottom</span>
-                </div>
-            </div>
-            <div
-                class="left"
-                onMouseEnter={() => hover('left')}
-                onMouseLeave={() => hover(false)}
-            />
-            <div
-                class="top"
-                onMouseEnter={() => hover('top')}
-                onMouseLeave={() => hover(false)}
-            />
-            <div
-                class="right"
-                onMouseEnter={() => hover('right')}
-                onMouseLeave={() => hover(false)}
-            />
-            <div
-                class="bottom"
-                onMouseEnter={() => hover('bottom')}
-                onMouseLeave={() => hover(false)}
-            />
-        </div>
-    </div>
-}
-
+export default App;
 ```
-## API
 
-| Props           | Types / Options                                           | Default             | Description                                                             |
-| --------------- | --------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
-| show            | bool: false, true                                         | false               | Mount tooltip if true.                                                  |
-| fontFamily      | string: font family                                       | 'inherit'           | Font family of text                                                     |
-| fontSize        | string: px                                                | 'inherit'           | Font size of text                                                       |
-| fontWeight      | string                                                    | 'bold'              | Font weight of text                                                     |
-| color           | string                                                    | 'inherit'           | Font color of text                                                      |
-| animation       | string: fade _or_ bounce                                  | 'fade'              | Mount/Unmount anmation. Custom animations: See advanced usage examples. |
-| hoverBackground | string: hex colors                                        | '#ececec'           | Background color on hover                                               |
-| hoverColor      | string: hex colors                                        | '#000000'           | Font color on hover                                                     |
-| backgroundColor | string: hex colors                                        | '#ffffff'           | Background color                                                        |
-| alert           | string: rgb colors                                        | false               | Pulse animation                                                         |
-| textboxWidth    | string: px _or_ auto                                      | '150px'             | Width of the text box                                                   |
-| padding         | string: px                                                | '15px 20px'         | Padding of text                                                         |
-| borderRadius    | string: px                                                | '5px'               | Radius of corners                                                       |
-| zIndex          | string: number                                            | '100'               | Z-index of tooltip                                                      |
-| moveDown        | string: px                                                | '0px'               | Downward position adjustment                                            |
-| moveRight       | string: px                                                | '0px'               | Right position adjustment                                               |
-| static          | boolean: false _or_ true                                  | false               | Disable hover animations                                                |
-| flat            | boolean: false _or_ true                                  | false               | Disable shadows                                                         |
-| lineSeparated   | boolean: false _or_ true _or_ string: css border property | '1px solid #ececec' | Enable &mp; specify line separation between options                     |
-| arrowAlign      | string: 'start' _or_ 'center' _or_ 'end'                  | 'start'             | Positions arrow relative to textbox                                     |
-| position        | string: 'position1 position2'                             | 'right center'      | Positions tooltip relative to target element                            |
+---
+
+### **Props**
+
+#### **Tooltip**
+| Prop Name | Type                             | Default              | Description                                  |
+|-----------|----------------------------------|----------------------|----------------------------------------------|
+| `children`| `JSX.Element`                   | `undefined`          | The content inside the tooltip container.   |
+| `class`   | `string`                        | `tooltipDef`         | Custom class for tooltip container.         |
+| `className`| `string`                       | `undefined`          | Additional class for tooltip container.     |
+
+#### **TooltipContent**
+| Prop Name      | Type                                      | Default    | Description                                                                 |
+|----------------|-------------------------------------------|------------|-----------------------------------------------------------------------------|
+| `position`     | `'top' | 'right' | 'bottom' | 'left'`     | `'top'`   | Tooltip position relative to its parent.                                   |
+| `arrowLocation`| `ObservableMaybe<string \| number>`        | `'50%'`    | Arrow's location relative to the tooltip (`50%` for centered).             |
+| `arrowSize`    | `ObservableMaybe<string \| number>`        | `'12px'`   | Arrow size.                                                                |
+| `static`       | `ObservableMaybe<boolean>`               | `false`    | If `true`, keeps the tooltip always visible.                               |
+| `class`        | `string`                                 | Dynamic    | Dynamic class for tooltip styling based on position.                       |
+| `style`        | `ObservableMaybe<CSSStyleDeclaration>`   | `undefined`| Custom styles for tooltip content.                                         |
+
+---
+
+### **Advanced Examples**
+
+#### **Dynamic Arrow Size and Location**
+
+```tsx
+<Tooltip>
+  Hover for details
+  <TooltipContent 
+    position="right" 
+    arrowLocation="75%" 
+    arrowSize="16px"
+  >
+    <p>Tooltip with a custom arrow size and location.</p>
+  </TooltipContent>
+</Tooltip>
+```
+
+#### **Custom Styling**
+
+You can override default styles using Tailwind classes or inline styles:
+
+```tsx
+<Tooltip class="bg-blue-500 text-white p-2 rounded">
+  Hover for info
+  <TooltipContent 
+    position="bottom" 
+    class="bg-yellow-300 text-black shadow-lg"
+    arrowSize="8px"
+  >
+    <p>Custom styled tooltip!</p>
+  </TooltipContent>
+</Tooltip>
+```
+
+---
 
 
+### **Requirements**
 
-## Development
+- **Woby.js**: For observables and reactivity.
+- **Tailwind CSS**: For utility-first styling.
+- **Woby-styled**: For styled components with dynamic styles.
 
-You're welcome to contribute to woby-power-tooltip.
+---
 
-To set up the project:
+### **License**
 
-1.  Fork and clone the repository
-2.  `$ npm install`
-3.  `$ npm run dev`
-
-## License
-
-MIT
+This component is open-source under the [MIT License](https://opensource.org/licenses/MIT). Contributions and feedback are welcome!
