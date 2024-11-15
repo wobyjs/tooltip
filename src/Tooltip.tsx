@@ -2,11 +2,6 @@ import { $$, $, useEffect, ObservableMaybe, Observable, isObservable, useMemo, g
 
 //https://www.menucool.com/tooltip/css-tooltip
 
-/*
-  Based on TailwindCSS recommendations,
-  consider using classes instead of the `@apply` directive
-  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
-*/
 
 import { styled } from 'woby-styled'
 import { useComputedStyle, useInvert } from 'use-woby'
