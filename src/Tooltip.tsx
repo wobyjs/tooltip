@@ -1,267 +1,164 @@
 import { $$, $, useEffect, ObservableMaybe, Observable, isObservable, useMemo, getMeta, type JSX } from 'woby'
 
-import { Align, Side, TextBox, isSide } from './TextBox'
-import { Arrow } from './Arrow'
+//https://www.menucool.com/tooltip/css-tooltip
 
-//import cssRules from './Tooltip/styles'
-import '../dist/output.css'
+/*
+  Based on TailwindCSS recommendations,
+  consider using classes instead of the `@apply` directive
+  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
+*/
 
-export type TooltipType = {
-    /** tailwind
-    * border-b border-b-[#ececec]
-    */
-    lineSeparated?: ObservableMaybe<boolean | string>, position?: ObservableMaybe<string>,
-    /** tailwind */
-    hoverBackground?: ObservableMaybe<string>,
-    /** tailwind */
-    backgroundColor?: ObservableMaybe<string>,
-    arrowAlign?: ObservableMaybe<Align>, moveDown?: ObservableMaybe<string>,
-    moveRight?: ObservableMaybe<string>, moveLeft?: ObservableMaybe<string>,
-    moveUp?: ObservableMaybe<string>, textAlign?: ObservableMaybe<string>, fontFamily?: ObservableMaybe<string>, fontWeight?: ObservableMaybe<string>,
-    /** tailwind */
-    fontSize?: ObservableMaybe<string>,
-    /** tailwind */
-    color?: ObservableMaybe<string>, animation?: ObservableMaybe<string>, zIndex?: ObservableMaybe<string>, flat?: ObservableMaybe<boolean>, show?: ObservableMaybe<boolean>,
-    /** tailwind */
-    hoverColor?: ObservableMaybe<string>,
-    /** no tailwind */
-    textboxWidth?: ObservableMaybe<string>,
-    /** tailwind */
-    padding?: ObservableMaybe<string>,
-    /** tailwind */
-    borderRadius?: ObservableMaybe<string>, shadowColor?: ObservableMaybe<string>, shadowShape?: ObservableMaybe<string>,
-    static?: ObservableMaybe<boolean>, alert?: ObservableMaybe<string>,
-    children?: JSX.Element
+import { styled } from 'woby-styled'
+import { useComputedStyle, useInvert } from 'use-woby'
+
+const tooltipDef = `text-left border-b-[#666] border-b border-dotted 
+[&:hover_.tpcontents]:visible [&:hover_.tpcontents]:opacity-100
+`
+
+const tooltip = `inline-block relative 
+[&:hover_.tpcontents]:visible [&:hover_.tpcontents]:opacity-100
+`
+
+const topDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const top = `absolute z-[99999999] left-2/4 -top-5 `
+
+const top_i = `absolute overflow-hidden top-full after:content-[''] after:absolute after:-translate-x-2/4 after:-translate-y-2/4 after:rotate-45 after:left-2/4 `
+
+const rightDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const right = `absolute z-[99999999] ml-5 left-full top-2/4 `
+const right_i = `absolute overflow-hidden right-full after:content-[''] after:absolute after:translate-x-2/4 after:-translate-y-2/4 after:-rotate-45 after:left-0 after:top-2/4 `
+
+const bottomDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const bottom = `absolute z-[99999999] left-2/4 top-10 `
+const bottom_i = `absolute overflow-hidden bottom-full after:content-[''] after:absolute after:-translate-x-2/4 after:translate-y-2/4 after:rotate-45 after:left-2/4 `
+
+const leftDef = `bg-[#eeeeee] min-w-[200px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const left = `absolute z-[99999999] mr-5 right-full top-2/4 `
+const left_i = `absolute overflow-hidden left-full after:content-[''] after:absolute after:-translate-x-2/4 after:-translate-y-2/4 after:-rotate-45 after:left-0 after:top-2/4 `
+
+
+export const Tooltip = ({ children, class: cls = tooltipDef, className, ...props }: JSX.HTMLAttributes<HTMLDivElement>) => {
+    return <div class={[tooltip, cls, className]} >
+        {children}
+    </div>
 }
 
-export const Tooltip = <T extends HTMLElement>(properties: TooltipType & JSX.HTMLAttributes<HTMLDivElement> & { parentRef?: Observable<HTMLElement>, parent?: JSX.Child, containerClass?: JSX.Class /* | ((props: { ref: Refs }) => Child), */ } = {}): JSX.Element => {
-    const props = {
-        /** tailwind */
-        hoverBackground: 'bg-[#ececec]',
-        /** tailwind */
-        hoverColor: 'text-[black]',
-        /** tailwind */
-        backgroundColor: 'bg-[white]',
-        /** not tailwind */
-        textboxWidth: '150px',
-        /** tailwind */
-        fontSize: '[font-size:inherit]',
-        /** tailwind */
-        color: 'text-inherit',
-        borderRadius: 'rounded-[5px]',
-        shadowColor: 'rgba(0,0,0,0.251)', shadowShape: '0 8px 15px', moveDown: '0px', moveRight: '0px', moveLeft: '0px', moveUp: '0px',
-        position: 'bottom center', arrowAlign: $<Align>('start'), textAlign: 'left', fontFamily: 'inherit', fontWeight: 'bold',
+function cssMultiply(value: ObservableMaybe<string | number>, multiplier: number): string {
+    const match = ($$(value) + '').match(/^(-?\d*\.?\d+)([a-z%]*)$/);
 
-        zIndex: '100', animation: '', show: false, ...properties
+    if (!match)
+        throw new Error(`Invalid CSS unit: ${$$(value)}`);
+
+    const [, numericValue, unit] = match
+    const result = +numericValue * multiplier
+
+    return `${result}${unit}`
+}
+
+const x2 = (value: ObservableMaybe<string | number>) => cssMultiply(value, 2)
+
+const translate = (x: ObservableMaybe<string>, y: ObservableMaybe<string>) => `translate(${$$(x)}, ${$$(y)})`
+
+export type PositionType = 'top' | 'right' | 'bottom' | 'left'
+export const TooltipContent = ({ children, style, class: cls = $(), className, static: st, position = 'top', arrowLocation = '50%', arrowSize = '12px', ...props }: JSX.HTMLAttributes<HTMLDivElement> &
+{
+    position?: ObservableMaybe<PositionType>,
+    arrowLocation?: ObservableMaybe<string | number>,
+    arrowSize?: ObservableMaybe<string | number>,
+    static?: ObservableMaybe<boolean>,
+}) => {
+    const setDef = () => {
+        if (!$$(cls))
+            switch ($$(position)) {
+                case 'top': (cls as Observable<string>)(topDef)
+                case 'left': (cls as Observable<string>)(leftDef)
+                case 'right': (cls as Observable<string>)(rightDef)
+                case 'bottom': (cls as Observable<string>)(bottomDef)
+            }
     }
+    useEffect(setDef)
+    setDef()
 
-    const { position: pos, lineSeparated: lines, arrowAlign: arwAlign,
-        hoverBackground, backgroundColor,
-        moveDown, moveRight, moveLeft, moveUp,
-        textAlign, fontFamily, fontWeight, fontSize, color, zIndex, animation, flat, parentRef: pf, parent: Parent,
-        // shadowColor, shadowShape, textboxWidth, padding, borderRadius, hoverColor,
-        containerClass,
-    } = props
+    const pos = useMemo(() => {
+        switch ($$(position)) {
+            case 'top': return top
+            case 'right': return right
+            case 'bottom': return bottom
+            case 'left': return left
+        }
+    })
+    const transform = useMemo(() => {
+        switch ($$(position)) {
+            case 'top': return translate('-' + $$(arrowLocation), '-100%')
+            case 'left':
+            case 'right': return translate('0', '-' + $$(arrowLocation))
+            case 'bottom': return translate('-' + $$(arrowLocation), '0')
+        }
+    })
+    const ali = useMemo(() => {
+        switch ($$(position)) {
+            case 'bottom':
+            case 'top': return { left: arrowLocation }
+            case 'left':
+            case 'right': return { top: arrowLocation }
+        }
+    })
+    const ii = useMemo(() => {
+        switch ($$(position)) {
+            case 'top': return top_i + styled`  
+                margin-left:-${$$(arrowSize)};
+                width:${x2(arrowSize)};
+                height:${$$(arrowSize)};
 
-    const show = /* $$(parent) ? props.show : */ (isObservable(props.show) ? props.show : $(props.show))
-    const parentRef: Observable<HTMLElement> = isObservable(pf) ? pf : $(pf)
+                &::after{
+                    width:${$$(arrowSize)};
+                    height:${$$(arrowSize)};
+                }
+     `
+            case 'right': return right_i + styled`  
+                margin-top:-${$$(arrowSize)};
+                width:${$$(arrowSize)};
+                height:${x2(arrowSize)};
 
-    useEffect(() => {
-        const p = $$(parentRef)
-        if (!p) return
+                &::after{
+                    width:${$$(arrowSize)};
+                    height:${$$(arrowSize)};
+                }
+     `
+            case 'bottom': return bottom_i + styled`  
+                margin-left:-${$$(arrowSize)};
+                width:${x2(arrowSize)};
+                height:${$$(arrowSize)};
 
-        const on = () => show(true)
-        const off = () => show(false)
-        p.addEventListener('mouseenter', on)
-        p.addEventListener('mouseleave', off)
+                &::after{
+                    width:${$$(arrowSize)};
+                    height:${$$(arrowSize)};
+                }
+     `
+            case 'left': return left_i + styled`  
+                margin-top:-${$$(arrowSize)};
+                width:${$$(arrowSize)};
+                height:${x2(arrowSize)};
 
-        return () => {
-            p.removeEventListener('mouseenter', on)
-            p.removeEventListener('mouseleave', off)
+                &::after{
+                    width:${$$(arrowSize)};
+                    height:${$$(arrowSize)};
+                }
+     `
         }
     })
 
-    const hoverArrow = $(false)
-    const mount = $(true)
-    // const tooltipRef = useRef(null)
-    // const {
-    //     lineSeparated = '1px solid #ececec', position = 'right center', hoverBackground = '#ececec', backgroundColor = 'white', arrowAlign = 'start', moveDown = '0px',
-    //     moveRight = '0px', moveLeft = '0px', moveUp = '0px', textAlign = 'left', fontFamily = 'inherit', fontWeight = 'bold', fontSize = 'inherit', color = 'inherit',
-    //     animation = '', zIndex = '100', flat,
-    //     show
-    // } = props
+    const tp = $<HTMLDivElement>()
+    const ir = $<HTMLElement>()
 
-    // useEffect(() => {
-    // //     // Injecting styles directly into header
-    // //     // if (!document.getElementById('rpt-css')) {
-    // //     //     const $style = document.createElement('style')
-    // //     //     $style.type = 'text/css'
-    // //     //     $style.id = 'rpt-css'
-    // //     //     document.head.appendChild($style)
-    // //     //     $style.innerHTML = cssRules
-    // //     // }
-
-    // //     // Basic prop type checking
-    // //     Object.keys(props).forEach((propName) => {
-    // //         const type = typeof $$(props[propName])
-    // //         const text = `React-power-tooltip: [${propName}] prop should be a`
-    // //         if (propName !== 'children' && type !== 'boolean' && type !== 'string') {
-    // //             // eslint-disable-next-line
-    // //             console.error(`${text} string (check also units)`)
-    // //         }
-    // //     })
-    // // })
-
-    // useEffect(() => {
-    //     show(props.show())
-    // })
-
-    useEffect(() => {
-        if ($$(show)) mount(true)
-        if (!$$(animation)) mount(false)
-    })
-
-    // const hoverArrowHandler = (bool) => {
-    //     setHoverArrow(bool)
-    // }
-
-    // const {
-    //     hoverBackground = '#ececec', hoverColor = 'black', backgroundColor = 'white', textboxWidth = '150px', padding = '15px 20px', borderRadius = '5px',
-    //     shadowColor = 'rgba(0,0,0,0.251)', shadowShape = '0 8px 15px', moveDown = '0px', moveRight = '0px', moveLeft = '0px', moveUp = '0px',
-    //     position: pos = 'right center', arrowAlign: arwAlign = 'start', textAlign = 'left', fontFamily = 'inherit', fontWeight = 'bold', fontSize = 'inherit', color = 'inherit',
-    //     zIndex = '100', animation = '', lineSeparated: lines,
-    //     flat,
-    // } = props
-
-
-    // const { lineSeparated: lines, position: pos, hoverBackground, backgroundColor, arrowAlign: arwAlign, moveDown, moveRight, moveLeft, moveUp, textAlign, fontFamily, fontWeight, fontSize, color, animation, zIndex, flat } = props
-
-    // Sets if false no line; if true default line; if string custom line;
-    const lineSeparated: Observable<string> = typeof ($$(lines)) === 'boolean'
-        ? $('border-b border-b-[#ececec]') : (isObservable(lines) ? lines : $(lines)) as Observable<string>
-
-    const position = {
-        side: $$(pos).split(' ')[0] as Side,
-        align: $$(pos).split(' ')[1] as Align,
-    }
-
-    const arrow = $($$(arwAlign))//isObservable(arwAlign) ? arwAlign : $(arwAlign)
-
-    const { side, align } = position
-    const classes = ['absolute flex']
-    let tooltipStyle = {}
-    let bottom
-
-    // const arrange = (top, left, right, height, width, cssSel) => {
-    //     tooltipStyle = { top, left, right, height, width }
-    //     classes.push(cssSel)
-    // }
-
-    switch (side) {
-        case 'bottom':
-            classes.push('top-full left-0 w-full justify-center')
-            break
-        case 'top':
-            classes.push('left-0 w-full justify-center')
-            bottom = '100%'
-            break
-        case 'right':
-            classes.push('top-0 left-full h-full justify-start')
-            break
-        default:
-            classes.push('top-0 right-full h-full justify-end')
-            break
-    }
-
-    const onAxis = {
-        y: isSide(position.side, 'top') || isSide(position.side, 'bottom'),
-        x: isSide(position.side, 'left') || isSide(position.side, 'right')
-    }
-
-    arrow((onAxis.y ? `h-${$$(arrow)}` : `v-${$$(arrow)}`) as Align)
-
-    const num = str => Number(str.slice(0, -2))
-    const move = {
-        down: num(moveDown),
-        up: num(moveUp),
-        left: num(moveLeft),
-        right: num(moveRight)
-    }
-
-    const oneMovePropIsNeg = move.down < 0 || move.up < 0
-        || move.left < 0 || move.right < 0
-
-    switch (align) {
-        case 'left':
-            if (onAxis.y) classes.push('!justify-start')
-            break
-        case 'right':
-            if (onAxis.y) classes.push('!justify-end')
-            break
-        case 'bottom':
-            if (onAxis.x) classes.push('items-end')
-            break
-        case 'top':
-            break
-        default:
-            if (onAxis.x) {
-                classes.push('items-center')
-                if (!oneMovePropIsNeg) {
-                    move.down *= 2
-                    move.up *= 2
+    const sty = useComputedStyle(tp, ['background-color', /^border-(?!.*-radius$)/, 'box-shadow'])
+    // useEffect(() => console.log($$(sty)))
+    return <div ref={tp} class={[pos, cls, () => $$(st) ? '' : 'invisible opacity-0', className, 'tpcontents']} style={[style, { transform }]} {...props}>
+        {children}
+        {() => <i ref={ir} class={[ii, styled`
+                &::after{
+                    ${Object.keys($$(sty)).map(k => `${k}:${$$(sty)[k]};\n`).join('')}
                 }
-            }
-            if (onAxis.y && !oneMovePropIsNeg) {
-                move.right *= 2
-                move.left *= 2
-            }
-            break
-    }
-
-    const adjustment = `${move.down}px ${move.left}px ${move.up}px ${move.right}px`
-
-    tooltipStyle = {
-        ...tooltipStyle,
-        zIndex,
-        color,
-        bottom,
-        fontSize,
-        textAlign,
-        fontFamily,
-        fontWeight,
-        padding: oneMovePropIsNeg ? null : adjustment,
-        margin: oneMovePropIsNeg ? adjustment : null,
-        animation: () => $$(show) ? `rpt-${$$(animation)} 0.2s` : `rpt-${$$(animation)}-out 0.15s`
-    }
-
-    const e = useMemo(() => ((!$$(animation) && $$(show) && $$(props.children)) || ($$(show) && $$(mount)) && $$(props.children)) ? (
-        <div
-            className={classes}
-            style={tooltipStyle}
-            onAnimationEnd={() => { if (!$$(show) && $$(animation)) mount(false) }}
-        >
-            <div class='flex justify-center'            >
-                <Arrow
-                    isHovered={hoverArrow}
-                    hovBkg={hoverBackground}
-                    bkgCol={backgroundColor}
-                    flat={flat}
-                />
-                <TextBox
-                    {...props}
-                    hoverArrow={hoverArrow}
-                    lines={lineSeparated}
-                    pos={position}
-                    arw={arrow}
-                    move={move}
-                />
-            </div>
-        </div>
-    ) : null
-    )
-
-    return useMemo(() => $$(Parent) ? <div class={[containerClass ?? 'relative']} ref={parentRef}>{Parent}{e}</div> : e)
+            `]} style={ali}></i>}
+    </div>
 }
-
-
-

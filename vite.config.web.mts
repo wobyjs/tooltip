@@ -9,7 +9,7 @@ const config = defineConfig({
         minify: false,
         lib: {
             entry: ["index.html"],
-            name: "woby-power-tooltip",
+            name: "woby-tooltip",
             formats: [/*'cjs', '*/'es'/*, 'umd'*/],
             fileName: (format: string, entryName: string) => `${entryName}.${format}.js`
         },
@@ -21,7 +21,7 @@ const config = defineConfig({
     },
     plugins: [
         // dts({ entryRoot: './src', outputDir: './dist/types' })
-        tsconfig({filename:'tsconfig.web.ts'})
+        tsconfig({ filename: 'tsconfig.web.json' })
     ],
     resolve: {
         alias: {
