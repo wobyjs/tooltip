@@ -6,7 +6,8 @@ import { $$, $, useEffect, ObservableMaybe, Observable, isObservable, useMemo, g
 import { styled } from 'woby-styled'
 import { useComputedStyle, useInvert } from 'use-woby'
 
-const tooltipDef = `text-left border-b-[#666] border-b border-dotted 
+// text-left border-b-[#666] border-b border-dotted 
+const tooltipDef = `
 [&:hover_.tpcontents]:visible [&:hover_.tpcontents]:opacity-100
 `
 

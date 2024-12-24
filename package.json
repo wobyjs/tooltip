@@ -35,16 +35,16 @@
     ],
     "license": "MIT",
     "peerDependencies": {
+        "use-woby": "workspace:../use-woby",
         "woby": "workspace:../woby",
-        "woby-styled": "workspace:../woby-styled",
-        "use-woby": "workspace:../use-woby"
+        "woby-styled": "workspace:../woby-styled"
     },
     "devDependencies": {
-        "concurrently": "^9.0.1",
-        "puppeteer": "^23.6.0",
+        "concurrently": "^9.1.0",
+        "puppeteer": "^23.11.1",
         "style-loader": "^4.0.0",
-        "tailwindcss": "^3.4.14",
-        "vite": "^5.4.10",
+        "tailwindcss": "^3.4.17",
+        "vite": "^6.0.5",
         "vite-plugin-tsconfig": "^1.0.5"
     },
     "author": "Chi Chong <wongchichong@gmail.com>",
@@ -54,6 +54,6 @@
         "url": "git@github.com:wongchichong/woby-tooltip.git"
     },
     "dependencies": {
-        "typescript": "5.6.3"
+        "typescript": "5.7.2"
     }
 }
