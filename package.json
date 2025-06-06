@@ -11,16 +11,15 @@
         "bump": "pnpm version patch",
         "npmjs": "pnpm publish",
         "release": "run-s -c git bump npmjs",
-        "css:watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-        "css": "tailwindcss -i ./src/input.css -o ./dist/output.css",
+        "css11": "tailwindcss -i ./src/input.css -o ./dist/output.css",
         "declaration": "tsc --build --force --declaration --emitDeclarationOnly --declarationMap  --verbose",
         "declaration:watch": "tsc --build --force --declaration --emitDeclarationOnly --declarationMap  --verbose --watch",
-        "watch": "run-p build:watch css:watch",
-        "build": "run-s css build:vite css declaration",
+        "watch": "run-p build:watch",
+        "build": "run-s build:vite declaration",
         "build:web": "vite build --config=vite.config.web.mts --mode production",
-        "web": "vite preview --config=vite.config.web.mts --host",
+        "dev": "vite preview --config=vite.config.web.mts --host",
         "dev:only": "vite --config=vite.config.web.mts --force --mode dev --host",
-        "dev": "run-p css:watch dev:only",
+        "dev1": "run-p dev:only",
         "build:vite": "vite build",
         "build:watch": "vite build --watch",
         "preview": "vite preview --host",
@@ -40,11 +39,12 @@
         "woby-styled": "workspace:../woby-styled"
     },
     "devDependencies": {
-        "concurrently": "^9.1.0",
-        "puppeteer": "^23.11.1",
+        "concurrently": "^9.1.2",
+        "puppeteer": "^24.2.0",
         "style-loader": "^4.0.0",
-        "tailwindcss": "^3.4.17",
-        "vite": "^6.0.5",
+        "tailwindcss": "^4.0.17",
+        "@tailwindcss/vite": "^4.0.6",
+        "vite": "^6.1.0",
         "vite-plugin-tsconfig": "^1.0.5"
     },
     "author": "Chi Chong <wongchichong@gmail.com>",
@@ -54,6 +54,6 @@
         "url": "git@github.com:wongchichong/woby-tooltip.git"
     },
     "dependencies": {
-        "typescript": "5.7.2"
+        "typescript": "5.7.3"
     }
 }

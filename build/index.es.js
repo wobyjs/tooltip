@@ -223,7 +223,7 @@ class Owner {
     var _a2;
     return (_a2 = this.context) == null ? void 0 : _a2[symbol];
   }
-  wrap(fn, owner, observer) {
+  wrap(fn, owner, observer, stack) {
     const ownerPrev = OWNER;
     const observerPrev = OBSERVER;
     setOwner(owner);
@@ -255,7 +255,7 @@ let Scheduler$2 = class Scheduler {
     this.waiting = [];
     this.counter = 0;
     this.locked = false;
-    this.flush = () => {
+    this.flush = (stack) => {
       if (this.locked)
         return;
       if (this.counter)
@@ -269,8 +269,8 @@ let Scheduler$2 = class Scheduler {
           if (!queue.length)
             break;
           this.waiting = [];
-          for (let i = 0, l = queue.length; i < l; i++) {
-            queue[i].update();
+          for (let i = 0, l2 = queue.length; i < l2; i++) {
+            queue[i][0].update(queue[i][1]);
           }
         }
       } finally {
@@ -283,8 +283,8 @@ let Scheduler$2 = class Scheduler {
       this.counter -= 1;
       this.flush();
     };
-    this.schedule = (observer) => {
-      this.waiting.push(observer);
+    this.schedule = (observer, stack) => {
+      this.waiting.push([observer, stack]);
     };
   }
 };
@@ -310,31 +310,32 @@ class Observable {
     }
     return this.value;
   }
-  set(value) {
+  set(value, stacks) {
     const equals = this.equals || is;
     const fresh = this.value === UNINITIALIZED || !equals(value, this.value);
     if (!fresh)
       return value;
     this.value = value;
+    const stack = void 0;
     SchedulerSync.counter += 1;
-    this.stale(DIRTY_YES);
+    this.stale(DIRTY_YES, stack);
     SchedulerSync.counter -= 1;
-    SchedulerSync.flush();
+    SchedulerSync.flush(stack);
     return value;
   }
-  stale(status) {
+  stale(status, stack) {
     for (const observer of this.observers) {
       if (observer.status !== DIRTY_MAYBE_NO || observer.observables.has(this)) {
         if (observer.sync) {
           observer.status = Math.max(observer.status, status);
-          SchedulerSync.schedule(observer);
+          SchedulerSync.schedule(observer, stack);
         } else {
-          observer.stale(status);
+          observer.stale(status, stack);
         }
       }
     }
   }
-  update(fn) {
+  update(fn, stack) {
     const value = fn(this.value);
     return this.set(value);
   }
@@ -400,7 +401,7 @@ class ObservablesArray {
   update() {
     var _a2;
     const { observables } = this;
-    for (let i = 0, l = observables.length; i < l; i++) {
+    for (let i = 0, l2 = observables.length; i < l2; i++) {
       (_a2 = observables[i].parent) == null ? void 0 : _a2.update();
     }
   }
@@ -459,22 +460,22 @@ class Observer extends Owner {
     this.observables.dispose(deep);
     super.dispose(deep);
   }
-  refresh(fn) {
+  refresh(fn, stack) {
     this.dispose(false);
     this.status = DIRTY_MAYBE_NO;
     try {
-      return this.wrap(fn, this, this);
+      return this.wrap(fn, this, this, stack);
     } finally {
       this.observables.postdispose();
     }
   }
-  run() {
+  run(stack) {
     throw new Error("Abstract method");
   }
-  stale(status) {
+  stale(status, stack) {
     throw new Error("Abstract method");
   }
-  update() {
+  update(stack) {
     if (this.disposed)
       return;
     if (this.status === DIRTY_MAYBE_YES) {
@@ -482,11 +483,11 @@ class Observer extends Owner {
     }
     if (this.status === DIRTY_YES) {
       this.status = DIRTY_MAYBE_NO;
-      this.run();
+      this.run(stack);
       if (this.status === DIRTY_MAYBE_NO) {
         this.status = DIRTY_NO;
       } else {
-        this.update();
+        this.update(stack);
       }
     } else {
       this.status = DIRTY_NO;
@@ -521,7 +522,7 @@ class Scheduler2 {
     this.waiting = [];
     this.locked = false;
     this.queued = false;
-    this.flush = () => {
+    this.flush = (stack) => {
       if (this.locked)
         return;
       if (!this.waiting.length)
@@ -533,33 +534,33 @@ class Scheduler2 {
           if (!queue.length)
             break;
           this.waiting = [];
-          for (let i = 0, l = queue.length; i < l; i++) {
-            queue[i].update();
+          for (let i = 0, l2 = queue.length; i < l2; i++) {
+            queue[i].update(stack);
           }
         }
       } finally {
         this.locked = false;
       }
     };
-    this.queue = () => {
+    this.queue = (stack) => {
       if (this.queued)
         return;
       this.queued = true;
-      this.resolve();
+      this.resolve(stack);
     };
-    this.resolve = () => {
+    this.resolve = (stack) => {
       queueMicrotask(() => {
         queueMicrotask(() => {
           {
             this.queued = false;
-            this.flush();
+            this.flush(stack);
           }
         });
       });
     };
-    this.schedule = (effect2) => {
+    this.schedule = (effect2, stack) => {
       this.waiting.push(effect2);
-      this.queue();
+      this.queue(stack);
     };
   }
 }
@@ -586,36 +587,36 @@ class Effect extends Observer {
     }
   }
   /* API */
-  run() {
-    const result = super.refresh(this.fn);
+  run(stack) {
+    const result = super.refresh(this.fn, stack);
     if (isFunction$1(result)) {
       lazyArrayPush(this, "cleanups", result);
     }
   }
-  schedule() {
+  schedule(stack) {
     var _a2;
     if ((_a2 = this.suspense) == null ? void 0 : _a2.suspended)
       return;
     if (this.sync) {
-      this.update();
+      this.update(stack);
     } else {
-      Scheduler$1.schedule(this);
+      Scheduler$1.schedule(this, stack);
     }
   }
-  stale(status) {
+  stale(status, stack) {
     const statusPrev = this.status;
     if (statusPrev >= status)
       return;
     this.status = status;
     if (!this.sync || statusPrev !== 2 && statusPrev !== 3) {
-      this.schedule();
+      this.schedule(stack);
     }
   }
-  update() {
+  update(stack) {
     var _a2;
     if ((_a2 = this.suspense) == null ? void 0 : _a2.suspended)
       return;
-    super.update();
+    super.update(stack);
   }
 }
 const effect = (fn, options2) => {
@@ -1154,7 +1155,7 @@ const getGettersAndSetters = (value) => {
   let getters;
   let setters;
   const keys = Object.keys(value);
-  for (let i = 0, l = keys.length; i < l; i++) {
+  for (let i = 0, l2 = keys.length; i < l2; i++) {
     const key = keys[i];
     const descriptor = Object.getOwnPropertyDescriptor(value, key);
     if (!descriptor)
@@ -1307,7 +1308,7 @@ store.reconcile = /* @__PURE__ */ (() => {
     const unext = getTarget(next);
     const prevKeys = Object.keys(uprev);
     const nextKeys = Object.keys(unext);
-    for (let i = 0, l = nextKeys.length; i < l; i++) {
+    for (let i = 0, l2 = nextKeys.length; i < l2; i++) {
       const key = nextKeys[i];
       const prevValue = uprev[key];
       const nextValue = unext[key];
@@ -1326,7 +1327,7 @@ store.reconcile = /* @__PURE__ */ (() => {
         prev[key] = void 0;
       }
     }
-    for (let i = 0, l = prevKeys.length; i < l; i++) {
+    for (let i = 0, l2 = prevKeys.length; i < l2; i++) {
       const key = prevKeys[i];
       if (!(key in unext)) {
         delete prev[key];
@@ -1382,7 +1383,7 @@ const castArray = (value) => {
   return isArray(value) ? value : [value];
 };
 const flatten = (arr) => {
-  for (let i = 0, l = arr.length; i < l; i++) {
+  for (let i = 0, l2 = arr.length; i < l2; i++) {
     if (!isArray(arr[i])) continue;
     return arr.flat(Infinity);
   }
@@ -1602,7 +1603,7 @@ const FragmentUtils = {
     const { values, length } = thiz;
     if (!length) return children;
     if (values instanceof Array) {
-      for (let i = 0, l = values.length; i < l; i++) {
+      for (let i = 0, l2 = values.length; i < l2; i++) {
         const value = values[i];
         if (value instanceof Node) {
           children.push(value);
@@ -1712,7 +1713,7 @@ const resolveStyle = (styles, resolved = {}) => {
 const resolveArraysAndStatics = /* @__PURE__ */ (() => {
   const DUMMY_RESOLVED = [];
   const resolveArraysAndStaticsInner = (values, resolved, hasObservables) => {
-    for (let i = 0, l = values.length; i < l; i++) {
+    for (let i = 0, l2 = values.length; i < l2; i++) {
       const value = values[i];
       const type = typeof value;
       if (type === "string" || type === "number" || type === "bigint") {
@@ -1818,7 +1819,7 @@ const setChildStatic = (parent, fragment, fragmentOnly, child, dynamic) => {
   }
   const fragmentNext = FragmentUtils.make();
   const children = Array.isArray(child) ? child : [child];
-  for (let i = 0, l = children.length; i < l; i++) {
+  for (let i = 0, l2 = children.length; i < l2; i++) {
     const child2 = children[i];
     const type = typeof child2;
     if (type === "string" || type === "number" || type === "bigint") {
@@ -1935,7 +1936,7 @@ const setClassesStatic = (element, object, objectPrev) => {
         }
       } else if (isArray(objectPrev)) {
         objectPrev = store.unwrap(objectPrev);
-        for (let i = 0, l = objectPrev.length; i < l; i++) {
+        for (let i = 0, l2 = objectPrev.length; i < l2; i++) {
           if (!objectPrev[i]) continue;
           setClassBoolean(element, false, objectPrev[i]);
         }
@@ -1949,12 +1950,12 @@ const setClassesStatic = (element, object, objectPrev) => {
     }
     if (isArray(object)) {
       if (isStore(object)) {
-        for (let i = 0, l = object.length; i < l; i++) {
+        for (let i = 0, l2 = object.length; i < l2; i++) {
           const fn = untrack(() => isFunction(object[i]) ? object[i] : object[SYMBOL_STORE_OBSERVABLE](String(i)));
           setClassBoolean(element, true, fn);
         }
       } else {
-        for (let i = 0, l = object.length; i < l; i++) {
+        for (let i = 0, l2 = object.length; i < l2; i++) {
           if (!object[i]) continue;
           setClassBoolean(element, true, object[i]);
         }
@@ -2021,7 +2022,7 @@ const setEventStatic = /* @__PURE__ */ (() => {
           return target;
         }
       });
-      for (let i = 0, l = targets.length; i < l; i++) {
+      for (let i = 0, l2 = targets.length; i < l2; i++) {
         target = targets[i];
         const handler = target[key];
         if (!handler) continue;
@@ -2247,6 +2248,7 @@ const wrapCloneElement = (target, component, props) => {
 const createElement = (component, _props, ..._children) => {
   const children = _children.length > 1 ? _children : _children.length > 0 ? _children[0] : void 0;
   const hasChildren = !isVoidChild(children);
+  const { ...rest } = _props ?? {};
   if (hasChildren && isObject(_props) && "children" in _props) {
     throw new Error('Providing "children" both as a prop and as rest arguments is forbidden');
   }
@@ -2334,7 +2336,7 @@ class Memo extends Observer {
     }
   }
   /* API */
-  run() {
+  run(stack) {
     const result = super.refresh(this.fn);
     if (!this.disposed && this.observables.empty()) {
       this.disposed = true;
@@ -2343,14 +2345,14 @@ class Memo extends Observer {
       this.observable.set(result);
     }
   }
-  stale(status) {
+  stale(status, stack) {
     const statusPrev = this.status;
     if (statusPrev >= status)
       return;
     this.status = status;
     if (statusPrev === DIRTY_MAYBE_YES)
       return;
-    this.observable.stale(DIRTY_MAYBE_YES);
+    this.observable.stale(DIRTY_MAYBE_YES, stack);
   }
 }
 const memo = (fn, options2) => {
@@ -2378,7 +2380,7 @@ function resolve(value) {
   }
   if (value instanceof Array) {
     const resolved = new Array(value.length);
-    for (let i = 0, l = resolved.length; i < l; i++) {
+    for (let i = 0, l2 = resolved.length; i < l2; i++) {
       resolved[i] = resolve(value[i]);
     }
     return resolved;
@@ -2405,22 +2407,22 @@ function createContext(defaultValue) {
 var n = function(t2, s, r, e) {
   var u;
   s[0] = 0;
-  for (var h = 1; h < s.length; h++) {
-    var p = s[h++], a = s[h] ? (s[0] |= p ? 1 : 2, r[s[h++]]) : s[++h];
-    3 === p ? e[0] = a : 4 === p ? e[1] = Object.assign(e[1] || {}, a) : 5 === p ? (e[1] = e[1] || {})[s[++h]] = a : 6 === p ? e[1][s[++h]] += a + "" : p ? (u = t2.apply(a, n(t2, a, r, ["", null])), e.push(u), a[0] ? s[0] |= 2 : (s[h - 2] = 0, s[h] = u)) : e.push(a);
+  for (var h2 = 1; h2 < s.length; h2++) {
+    var p = s[h2++], a = s[h2] ? (s[0] |= p ? 1 : 2, r[s[h2++]]) : s[++h2];
+    3 === p ? e[0] = a : 4 === p ? e[1] = Object.assign(e[1] || {}, a) : 5 === p ? (e[1] = e[1] || {})[s[++h2]] = a : 6 === p ? e[1][s[++h2]] += a + "" : p ? (u = t2.apply(a, n(t2, a, r, ["", null])), e.push(u), a[0] ? s[0] |= 2 : (s[h2 - 2] = 0, s[h2] = u)) : e.push(a);
   }
   return e;
 }, t = /* @__PURE__ */ new Map();
 function htm(s) {
   var r = t.get(this);
   return r || (r = /* @__PURE__ */ new Map(), t.set(this, r)), (r = n(this, r.get(s) || (r.set(s, r = function(n2) {
-    for (var t2, s2, r2 = 1, e = "", u = "", h = [0], p = function(n3) {
-      1 === r2 && (n3 || (e = e.replace(/^\s*\n\s*|\s*\n\s*$/g, ""))) ? h.push(0, n3, e) : 3 === r2 && (n3 || e) ? (h.push(3, n3, e), r2 = 2) : 2 === r2 && "..." === e && n3 ? h.push(4, n3, 0) : 2 === r2 && e && !n3 ? h.push(5, 0, true, e) : r2 >= 5 && ((e || !n3 && 5 === r2) && (h.push(r2, 0, e, s2), r2 = 6), n3 && (h.push(r2, n3, 0, s2), r2 = 6)), e = "";
+    for (var t2, s2, r2 = 1, e = "", u = "", h2 = [0], p = function(n3) {
+      1 === r2 && (n3 || (e = e.replace(/^\s*\n\s*|\s*\n\s*$/g, ""))) ? h2.push(0, n3, e) : 3 === r2 && (n3 || e) ? (h2.push(3, n3, e), r2 = 2) : 2 === r2 && "..." === e && n3 ? h2.push(4, n3, 0) : 2 === r2 && e && !n3 ? h2.push(5, 0, true, e) : r2 >= 5 && ((e || !n3 && 5 === r2) && (h2.push(r2, 0, e, s2), r2 = 6), n3 && (h2.push(r2, n3, 0, s2), r2 = 6)), e = "";
     }, a = 0; a < n2.length; a++) {
       a && (1 === r2 && p(), p(a));
-      for (var l = 0; l < n2[a].length; l++) t2 = n2[a][l], 1 === r2 ? "<" === t2 ? (p(), h = [h], r2 = 3) : e += t2 : 4 === r2 ? "--" === e && ">" === t2 ? (r2 = 1, e = "") : e = t2 + e[0] : u ? t2 === u ? u = "" : e += t2 : '"' === t2 || "'" === t2 ? u = t2 : ">" === t2 ? (p(), r2 = 1) : r2 && ("=" === t2 ? (r2 = 5, s2 = e, e = "") : "/" === t2 && (r2 < 5 || ">" === n2[a][l + 1]) ? (p(), 3 === r2 && (h = h[0]), r2 = h, (h = h[0]).push(2, 0, r2), r2 = 0) : " " === t2 || "	" === t2 || "\n" === t2 || "\r" === t2 ? (p(), r2 = 2) : e += t2), 3 === r2 && "!--" === e && (r2 = 4, h = h[0]);
+      for (var l2 = 0; l2 < n2[a].length; l2++) t2 = n2[a][l2], 1 === r2 ? "<" === t2 ? (p(), h2 = [h2], r2 = 3) : e += t2 : 4 === r2 ? "--" === e && ">" === t2 ? (r2 = 1, e = "") : e = t2 + e[0] : u ? t2 === u ? u = "" : e += t2 : '"' === t2 || "'" === t2 ? u = t2 : ">" === t2 ? (p(), r2 = 1) : r2 && ("=" === t2 ? (r2 = 5, s2 = e, e = "") : "/" === t2 && (r2 < 5 || ">" === n2[a][l2 + 1]) ? (p(), 3 === r2 && (h2 = h2[0]), r2 = h2, (h2 = h2[0]).push(2, 0, r2), r2 = 0) : " " === t2 || "	" === t2 || "\n" === t2 || "\r" === t2 ? (p(), r2 = 2) : e += t2), 3 === r2 && "!--" === e && (r2 = 4, h2 = h2[0]);
     }
-    return p(), h;
+    return p(), h2;
   }(s)), r), arguments, [])).length > 1 ? r : r[0];
 }
 const render = (child, parent) => {
@@ -2437,9 +2439,9 @@ const render = (child, parent) => {
 var _a, _b;
 !!((_b = (_a = globalThis.CDATASection) == null ? void 0 : _a.toString) == null ? void 0 : _b.call(_a).match(/^\s*function\s+CDATASection\s*\(\s*\)\s*\{\s*\[native code\]\s*\}\s*$/));
 const registry = {};
-const h2 = (type, props, ...children) => createElement(registry[type] || type, props, ...children);
+const h = (type, props, ...children) => createElement(registry[type] || type, props, ...children);
 const register = (components) => void assign(registry, components);
-assign(htm.bind(h2), { register });
+assign(htm.bind(h), { register });
 let nanoid = (size = 21) => crypto.getRandomValues(new Uint8Array(size)).reduce((id, byte) => {
   byte &= 63;
   if (byte < 36) {
@@ -2486,7 +2488,57 @@ ${strings.map((str, i) => i < values.length ? str + get(values[i]) : str).join("
   return { comp, styled: styled2 };
 }
 const styled = Styled().styled;
+const getScreen = () => {
+  if (typeof window !== "undefined" && window.screen) {
+    return window.screen;
+  }
+  return void 0;
+};
+observable(getScreen());
+observable(0);
+observable(0);
+observable(0);
+observable(0);
+observable(0);
+observable(0);
+observable(0);
+observable(0);
+observable(0);
 createContext();
+function useLocation() {
+  const location = observable(window.location);
+  effect(() => {
+    const handleLocationChange = () => location({ ...window.location });
+    window.addEventListener("popstate", handleLocationChange);
+    const originalPushState = window.history.pushState;
+    const originalReplaceState = window.history.replaceState;
+    window.history.pushState = function(...args) {
+      originalPushState.apply(window.history, args);
+      handleLocationChange();
+    };
+    window.history.replaceState = function(...args) {
+      originalReplaceState.apply(window.history, args);
+      handleLocationChange();
+    };
+    return () => {
+      window.removeEventListener("popstate", handleLocationChange);
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
+    };
+  });
+  return location;
+}
+observable(0);
+observable();
+window.getSelection();
+observable();
+observable(0);
+observable();
+observable(0);
+observable(true);
+observable(0);
+observable("");
+observable([]);
 function useComputedStyle(target, patterns = []) {
   const styles = observable({});
   effect(() => {
@@ -2523,7 +2575,9 @@ function useComputedStyle(target, patterns = []) {
   });
   return styles;
 }
-const tooltipDef = `text-left border-b-[#666] border-b border-dotted 
+const l = useLocation();
+memo(() => get(l).host.toLowerCase().includes("localhost"));
+const tooltipDef = `
 [&:hover_.tpcontents]:visible [&:hover_.tpcontents]:opacity-100
 `;
 const tooltip = `inline-block relative 
@@ -2666,14 +2720,14 @@ const TooltipContent = ({ children, style, class: cls = observable(), className,
 };
 const Demo = () => {
   observable();
-  return /* @__PURE__ */ jsx("div", { class: "place-items-center h-screen bg-gray-100", children: [
+  return /* @__PURE__ */ jsx("div", { class: "flex flex-col items-center h-screen bg-gray-100 relative mx-auto w-[50%]", children: [
     "DEMO",
     /* @__PURE__ */ jsx("br", {}),
     /* @__PURE__ */ jsx("br", {}),
     /* @__PURE__ */ jsx("br", {}),
     /* @__PURE__ */ jsx("br", {}),
     /* @__PURE__ */ jsx("br", {}),
-    /* @__PURE__ */ jsx("table", { class: "[&_td]:h-[7rem] [&_td]:w-[7rem] [&_td]:text-center ", children: /* @__PURE__ */ jsx("tbody", { children: [
+    /* @__PURE__ */ jsx("table", { class: "[&_td]:h-[7rem] [&_td]:w-[7rem] [&_td]:text-center mx-auto", children: /* @__PURE__ */ jsx("tbody", { children: [
       /* @__PURE__ */ jsx("tr", { children: [
         /* @__PURE__ */ jsx("td", {}),
         /* @__PURE__ */ jsx("td", { children: [
@@ -2681,7 +2735,7 @@ const Demo = () => {
           /* @__PURE__ */ jsx("div", { class: "top", children: /* @__PURE__ */ jsx(Tooltip, { children: [
             "Top",
             /* @__PURE__ */ jsx(TooltipContent, { position: "top", class: `bg-[#009cdc] text-[white] min-w-[300px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `, children: [
-              /* @__PURE__ */ jsx("h3", { class: "font-[22px] font-bold", children: "Lorem Ipsum" }),
+              /* @__PURE__ */ jsx("h3", { class: "text-[22px] font-bold", children: "Lorem Ipsum" }),
               /* @__PURE__ */ jsx("ul", { children: [
                 /* @__PURE__ */ jsx("li", { children: "Aliquam ac odio ut est" }),
                 /* @__PURE__ */ jsx("li", { children: "Cras porttitor orci" })
@@ -2707,7 +2761,7 @@ const Demo = () => {
           "Right",
           /* @__PURE__ */ jsx(TooltipContent, { position: "right", class: "min-w-[200px] w-[400px] translate-x-0 -translate-y-2/4 text-[#EEEEEE] bg-[#444444] box-border shadow-[0_1px_8px_rgba(0,0,0,0.5)] transition-opacity duration-[0.8s] p-5 rounded-lg left-full top-2/4", children: [
             /* @__PURE__ */ jsx("img", { src: "https://www.menucool.com/tooltip/cssttp/tooltip-head.jpg" }),
-            /* @__PURE__ */ jsx("h3", { class: "font-[22px] font-bold", children: "Fade in Effect" }),
+            /* @__PURE__ */ jsx("h3", { class: "text-[22px] font-bold", children: "Fade in Effect" }),
             /* @__PURE__ */ jsx("ul", { children: [
               /* @__PURE__ */ jsx("li", { children: "This demo has fade in/out effect." }),
               /* @__PURE__ */ jsx("li", { children: "It is using CSS opacity, visibility, and transition property to toggle the tooltip." }),
@@ -2726,7 +2780,7 @@ const Demo = () => {
           "Bottom",
           /* @__PURE__ */ jsx(TooltipContent, { position: "bottom", class: `bg-[#eeeeee] min-w-[400px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `, children: [
             /* @__PURE__ */ jsx("img", { class: "w-[400px]", src: "https://www.menucool.com/tooltip/cssttp/css-tooltip-image.jpg" }),
-            /* @__PURE__ */ jsx("h3", { class: "font-[22px] font-bold", children: "CSS Tooltip" }),
+            /* @__PURE__ */ jsx("h3", { class: "text-[22px] font-bold", children: "CSS Tooltip" }),
             /* @__PURE__ */ jsx("p", { children: "The CSS tooltip appears when user moves the mouse over an element, or when user tap the element with a mobile device." })
           ] })
         ] }) }),

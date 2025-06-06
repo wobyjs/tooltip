@@ -1,7 +1,9 @@
 import { useEffect, $ } from 'woby'
 import { render } from 'woby'
 
-import '../../dist/output.css'
+// import '../../dist/woby-tooltip.css'
+// import '../../build/woby-tooltip.css'
+import './input.css'
 import { Tooltip, TooltipContent } from '../Tooltip'
 
 
@@ -12,19 +14,19 @@ export const Demo = () => {
     //         Prism.highlightAll()
     // })
     // usePrismHighlight(codeBlockRef)
-    return <div class='place-items-center h-screen bg-gray-100'>
+    return < div class='flex flex-col items-center h-screen bg-gray-100 relative mx-auto w-[50%]' >
         DEMO
+        < br />
         <br />
         <br />
         <br />
         <br />
-        <br />
-        <table class='[&_td]:h-[7rem] [&_td]:w-[7rem] [&_td]:text-center '>
+        <table class='[&_td]:h-[7rem] [&_td]:w-[7rem] [&_td]:text-center mx-auto'>
             <tbody>
                 <tr><td></td><td>  <div class="top">
                     <Tooltip>Top
                         <TooltipContent position='top' class={`bg-[#009cdc] text-[white] min-w-[300px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `}>
-                            <h3 class='font-[22px] font-bold'>Lorem Ipsum</h3>
+                            <h3 class='text-[22px] font-bold'>Lorem Ipsum</h3>
                             <ul>
                                 <li>Aliquam ac odio ut est</li>
                                 <li>Cras porttitor orci</li>
@@ -47,7 +49,7 @@ export const Demo = () => {
                         <Tooltip>Right
                             <TooltipContent position='right' class='min-w-[200px] w-[400px] translate-x-0 -translate-y-2/4 text-[#EEEEEE] bg-[#444444] box-border shadow-[0_1px_8px_rgba(0,0,0,0.5)] transition-opacity duration-[0.8s] p-5 rounded-lg left-full top-2/4'>
                                 <img src="https://www.menucool.com/tooltip/cssttp/tooltip-head.jpg" />
-                                <h3 class='font-[22px] font-bold'>Fade in Effect</h3>
+                                <h3 class='text-[22px] font-bold'>Fade in Effect</h3>
                                 <ul>
                                     <li>This demo has fade in/out effect.</li>
                                     <li>It is using CSS opacity, visibility, and transition property to toggle the tooltip.</li>
@@ -60,7 +62,7 @@ export const Demo = () => {
                         Bottom
                         <TooltipContent position='bottom' class={`bg-[#eeeeee] min-w-[400px] box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `}>
                             <img class='w-[400px]' src="https://www.menucool.com/tooltip/cssttp/css-tooltip-image.jpg" />
-                            <h3 class='font-[22px] font-bold'>CSS Tooltip</h3>
+                            <h3 class='text-[22px] font-bold'>CSS Tooltip</h3>
                             <p>The CSS tooltip appears when user moves the mouse over an element, or when user tap the element with a mobile device.</p>
                         </TooltipContent>
                     </Tooltip>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'woby';
 import { shallow, mount } from 'enzyme';
 
 import Tooltip from '../src/lib';

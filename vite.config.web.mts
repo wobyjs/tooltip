@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import tsconfig from 'vite-plugin-tsconfig'
 
@@ -21,7 +22,8 @@ const config = defineConfig({
     },
     plugins: [
         // dts({ entryRoot: './src', outputDir: './dist/types' })
-        tsconfig({ filename: 'tsconfig.web.json' })
+        tsconfig({ filename: 'tsconfig.web.json' }),
+        tailwindcss(),
     ],
     resolve: {
         alias: {
