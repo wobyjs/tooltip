@@ -1,10 +1,10 @@
-import { $$, $, useEffect, ObservableMaybe, Observable, isObservable, useMemo, getMeta, type JSX } from 'woby'
+import { $$, $, useEffect, ObservableMaybe, Observable, useMemo, type JSX } from 'woby'
 
 //https://www.menucool.com/tooltip/css-tooltip
 
 
 import { styled } from 'woby-styled'
-import { useComputedStyle, useInvert } from 'use-woby'
+import { useComputedStyle } from 'use-woby'
 
 // text-left border-b-[#666] border-b border-dotted 
 const tooltipDef = `
@@ -24,7 +24,7 @@ const rightDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#00
 const right = `absolute z-[99999999] ml-5 left-full top-2/4 `
 const right_i = `absolute overflow-hidden right-full after:content-[''] after:absolute after:translate-x-2/4 after:-translate-y-2/4 after:-rotate-45 after:left-0 after:top-2/4 `
 
-const bottomDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
+const bottomDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.5s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
 const bottom = `absolute z-[99999999] left-2/4 top-10 `
 const bottom_i = `absolute overflow-hidden bottom-full after:content-[''] after:absolute after:-translate-x-2/4 after:translate-y-2/4 after:rotate-45 after:left-2/4 `
 
@@ -34,9 +34,14 @@ const left_i = `absolute overflow-hidden left-full after:content-[''] after:abso
 
 
 export const Tooltip = ({ children, class: cls = tooltipDef, className, ...props }: JSX.HTMLAttributes<HTMLDivElement>) => {
-    return <div class={[tooltip, cls, className]} >
-        {children}
-    </div>
+    return (
+        <div
+            class={[tooltip, cls, className]}
+            {...props}
+        >
+            {children}
+        </div>
+    )
 }
 
 function cssMultiply(value: ObservableMaybe<string | number>, multiplier: number): string {
@@ -56,13 +61,15 @@ const x2 = (value: ObservableMaybe<string | number>) => cssMultiply(value, 2)
 const translate = (x: ObservableMaybe<string>, y: ObservableMaybe<string>) => `translate(${$$(x)}, ${$$(y)})`
 
 export type PositionType = 'top' | 'right' | 'bottom' | 'left'
-export const TooltipContent = ({ children, style, class: cls = $(), className, static: st, position = 'top', arrowLocation = '50%', arrowSize = '12px', ...props }: JSX.HTMLAttributes<HTMLDivElement> &
+export const TooltipContent = ({ children, style, class: cls = $(), className, static: st, position = 'top', arrowLocation = '50%', arrowSize = '12px', pointerEvents, ...props }: JSX.HTMLAttributes<HTMLDivElement> &
 {
     position?: ObservableMaybe<PositionType>,
     arrowLocation?: ObservableMaybe<string | number>,
     arrowSize?: ObservableMaybe<string | number>,
     static?: ObservableMaybe<boolean>,
+    pointerEvents?: ObservableMaybe<boolean>
 }) => {
+
     const setDef = () => {
         if (!$$(cls))
             switch ($$(position)) {
@@ -144,17 +151,30 @@ export const TooltipContent = ({ children, style, class: cls = $(), className, s
         }
     })
 
-    const tp = $<HTMLDivElement>()
+    const tooltipRef = $<HTMLDivElement>()
     const ir = $<HTMLElement>()
 
-    const sty = useComputedStyle(tp, ['background-color', /^border-(?!.*-radius$)/, 'box-shadow'])
+    const sty = useComputedStyle(tooltipRef, ['background-color', /^border-(?!.*-radius$)/, 'box-shadow'])
     // useEffect(() => console.log($$(sty)))
-    return <div ref={tp} class={[pos, cls, () => $$(st) ? '' : 'invisible opacity-0', className, 'tpcontents']} style={[style, { transform }]} {...props}>
-        {children}
-        {() => <i ref={ir} class={[ii, styled`
+
+    return (
+        <div
+            ref={tooltipRef}
+            class={[
+                pos,
+                cls,
+                () => $$(st) ? '' : 'invisible opacity-0',
+                () => $$(pointerEvents) ? "" : "pointer-events-none",
+                className,
+                'tpcontents']}
+            style={[style, { transform }]}
+            {...props}
+        >
+            {children}
+            {() => <i ref={ir} class={[ii, styled`
                 &::after{
                     ${Object.keys($$(sty)).map(k => `${k}:${$$(sty)[k]};\n`).join('')}
                 }
             `]} style={ali}></i>}
-    </div>
+        </div>)
 }
