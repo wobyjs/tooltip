@@ -1,8 +1,8 @@
 import { useEffect, $ } from 'woby'
 import { render } from 'woby'
 
-// import '../../dist/woby-tooltip.css'
-// import '../../build/woby-tooltip.css'
+// import '../../dist/tooltip.css'
+// import '../../build/tooltip.css'
 import './input.css'
 import { Tooltip, TooltipContent } from '../Tooltip'
 

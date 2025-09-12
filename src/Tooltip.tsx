@@ -3,8 +3,8 @@ import { $$, $, useEffect, ObservableMaybe, Observable, isObservable, useMemo, g
 //https://www.menucool.com/tooltip/css-tooltip
 
 
-import { styled } from 'woby-styled'
-import { useComputedStyle, useInvert } from 'use-woby'
+import { styled } from '@woby/styled'
+import { useComputedStyle, useInvert } from '@woby/use'
 
 // text-left border-b-[#666] border-b border-dotted 
 const tooltipDef = `
@@ -40,10 +40,10 @@ export const Tooltip = ({ children, class: cls = tooltipDef, className, ...props
 }
 
 function cssMultiply(value: ObservableMaybe<string | number>, multiplier: number): string {
-    const match = ($$(value) + '').match(/^(-?\d*\.?\d+)([a-z%]*)$/);
+    const match = ($$(value) + '').match(/^(-?\d*\.?\d+)([a-z%]*)$/)
 
     if (!match)
-        throw new Error(`Invalid CSS unit: ${$$(value)}`);
+        throw new Error(`Invalid CSS unit: ${$$(value)}`)
 
     const [, numericValue, unit] = match
     const result = +numericValue * multiplier

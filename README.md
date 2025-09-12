@@ -1,4 +1,4 @@
-# woby-tooltip
+# @woby/tooltip
 
 ### Tooltip Component Documentation
 
@@ -19,7 +19,7 @@ This tooltip system provides:
 ### Installation
 
 ```ps
-pnpm i woby woby-styled use-woby woby-tooltip
+pnpm i woby woby-styled use-woby @woby/tooltip
 ```
 
 ### **Usage**
