@@ -19,7 +19,7 @@ This tooltip system provides:
 ### Installation
 
 ```ps
-pnpm i woby woby-styled use-woby @woby/tooltip
+pnpm i woby @woby/styled @woby/use @woby/tooltip
 ```
 
 ### **Usage**
@@ -107,7 +107,7 @@ You can override default styles using Tailwind classes or inline styles:
 
 - **Woby.js**: For observables and reactivity.
 - **Tailwind CSS**: For utility-first styling.
-- **Woby-styled**: For styled components with dynamic styles.
+- **@woby/styled**: For styled components with dynamic styles.
 
 ---
 

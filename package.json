@@ -33,7 +33,7 @@
         "notification",
         "menu",
         "woby",
-        "woby-component"
+        "@woby/component"
     ],
     "license": "MIT",
     "peerDependencies": {
@@ -51,7 +51,7 @@
         "vite-plugin-tsconfig": "^1.0.5"
     },
     "author": "Chi Chong <wongchichong@gmail.com>",
-    "homepage": "https://github.com/wongchichong/tooltip",
+    "homepage": "https://github.com/wobyjs/tooltip",
     "repository": {
         "type": "git",
         "url": "git@github.com:wongchichong/tooltip.git"

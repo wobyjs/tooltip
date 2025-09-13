@@ -16,15 +16,13 @@ const config = defineConfig({
         },
         sourcemap: true,
         rollupOptions: {
-            external: ['woby', 'woby/jsx-runtime', 'oby', 'woby/jsx-runtime', '@woby/styled', '@woby/use', 'woby-styled', 'use-woby'],
+            external: ['woby', 'woby/jsx-runtime', 'oby', 'woby/jsx-runtime', '@woby/styled', '@woby/use', '@woby/styled', '@woby/use'],
             output: {
                 globals: {
                     'woby': 'woby',
                     'woby/jsx-runtime': 'woby/jsx-runtime',
                     '@woby/styled': '@woby/styled',
                     '@woby/use': '@woby/use',
-                    'woby-styled': 'woby-styled',
-                    'use-woby': 'use-woby',
                 }
             }
         }
@@ -40,8 +38,8 @@ const config = defineConfig({
         alias: {
             '~': path.resolve(__dirname, 'src'),
             'woby': isDev ? path.resolve(__dirname, '../woby/src') : 'woby',
-            'woby-styled': isDev ? path.resolve(__dirname, '../styled/src') : '@woby/styled',
-            'use-woby': isDev ? path.resolve(__dirname, '../use/src') : '@woby/use',
+            '@woby/styled': isDev ? path.resolve(__dirname, '../styled/src') : '@woby/styled',
+            '@woby/use': isDev ? path.resolve(__dirname, '../use/src') : '@woby/use',
         },
     },
 })
