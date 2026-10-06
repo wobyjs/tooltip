@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Reactivity Test - defaults() pattern verification</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 2rem 0;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .test-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        button {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tooltip Reactivity Test</h1>
+    <p>Testing that defaults() pattern properly wires HTML attributes into inner components.</p>
+
+    <!-- Test 1: Tooltip component with initial attributes -->
+    <div class="test-section">
+        <div class="test-title">Test 1: Tooltip (new implementation) with initial attributes</div>
+        <woby-tooltip id="tooltip1" cls="bg-blue-100 p-4">
+            <button>Hover me (cls attribute)</button>
+            <woby-tooltip-content position="bottom">
+                Tooltip content (position: bottom)
+            </woby-tooltip-content>
+        </woby-tooltip>
+        <button id="changeTooltip1Cls">Change cls attribute</button>
+    </div>
+
+    <!-- Test 2: TooltipContent with reactive position -->
+    <div class="test-section">
+        <div class="test-title">Test 2: TooltipContent position reactivity</div>
+        <woby-tooltip>
+            <button>Hover me</button>
+            <woby-tooltip-content id="tooltipContent2" position="top" cls="bg-green-100">
+                Initial position: top
+            </woby-tooltip-content>
+        </woby-tooltip>
+        <button id="changePosition2Top">Position: top</button>
+        <button id="changePosition2Bottom">Position: bottom</button>
+        <button id="changePosition2Left">Position: left</button>
+        <button id="changePosition2Right">Position: right</button>
+    </div>
+
+    <!-- Test 3: Tooltip (lib implementation) with defaults() -->
+    <div class="test-section">
+        <div class="test-title">Test 3: Tooltip (lib) - defaults() pattern</div>
+        <woby-tooltip-lib id="tooltipLib3" position="bottom center" hover-background="bg-[#ececec]">
+            Tooltip lib content
+        </woby-tooltip-lib>
+        <button id="changeTooltipLib3Position">Change position</button>
+    </div>
+
+    <!-- Test 4: cls override, class append contract -->
+    <div class="test-section">
+        <div class="test-title">Test 4: cls override, class append contract</div>
+        <woby-tooltip id="tooltip4" cls="bg-red-200 p-6" class="shadow-lg">
+            <button>Test cls/class contract</button>
+            <woby-tooltip-content>
+                Content with custom styling
+            </woby-tooltip-content>
+        </woby-tooltip>
+        <button id="removeClsTooltip4">Remove cls (show defaults)</button>
+        <button id="changeClsTooltip4">Change cls</button>
+        <button id="addClassTooltip4">Add class</button>
+    </div>
+
+    <script type="module">
+        // Import components - this registers the CustomElements
+        import './src/Tooltip.tsx'
+        import './src/lib/Tooltip.tsx'
+
+        // Test 1: Change cls attribute
+        const tooltip1 = document.querySelector('#tooltip1')
+        const changeTooltip1ClsBtn = document.querySelector('#changeTooltip1Cls')
+        changeTooltip1ClsBtn.addEventListener('click', () => {
+            tooltip1.setAttribute('cls', 'bg-purple-200 p-8 shadow-xl')
+        })
+
+        // Test 2: Change position attribute
+        const tooltipContent2 = document.querySelector('#tooltipContent2')
+        document.querySelector('#changePosition2Top').addEventListener('click', () => {
+            tooltipContent2.setAttribute('position', 'top')
+        })
+        document.querySelector('#changePosition2Bottom').addEventListener('click', () => {
+            tooltipContent2.setAttribute('position', 'bottom')
+        })
+        document.querySelector('#changePosition2Left').addEventListener('click', () => {
+            tooltipContent2.setAttribute('position', 'left')
+        })
+        document.querySelector('#changePosition2Right').addEventListener('click', () => {
+            tooltipContent2.setAttribute('position', 'right')
+        })
+
+        // Test 3: Change Tooltip (lib) position
+        const tooltipLib3 = document.querySelector('#tooltipLib3')
+        const changeTooltipLib3PositionBtn = document.querySelector('#changeTooltipLib3Position')
+        let positionIndex = 0
+        const positions = ['bottom center', 'top center', 'left center', 'right center']
+        changeTooltipLib3PositionBtn.addEventListener('click', () => {
+            positionIndex = (positionIndex + 1) % positions.length
+            tooltipLib3.setAttribute('position', positions[positionIndex])
+        })
+
+        // Test 4: cls/class contract
+        const tooltip4 = document.querySelector('#tooltip4')
+        document.querySelector('#removeClsTooltip4').addEventListener('click', () => {
+            tooltip4.setAttribute('cls', '')
+        })
+        document.querySelector('#changeClsTooltip4').addEventListener('click', () => {
+            tooltip4.setAttribute('cls', 'bg-yellow-200 p-3')
+        })
+        document.querySelector('#addClassTooltip4').addEventListener('click', () => {
+            tooltip4.setAttribute('class', 'rounded-lg border-2 border-blue-500')
+        })
+
+        // Verify that attributes update reactively
+        console.log('✅ Reactivity test page loaded')
+        console.log('All components should update when attributes change via setAttribute()')
+    </script>
+</body>
+</html>

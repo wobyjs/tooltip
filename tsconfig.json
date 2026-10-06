@@ -1,4 +1,4 @@
-// GENERATED via 'vite-plugin-tsconfig' - this should be automatically created and deleted inside the build process. 
+// GENERATED via 'vite-plugin-tsconfig' - this should be automatically created and deleted inside the build process.
 {
     "compilerOptions": {
         "allowJs": false,
@@ -9,7 +9,7 @@
         "declaration": true,
         "declarationDir": "./dist/types",
         "disableSizeLimit": true,
-        "esModuleInterop": false,
+        "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         // "importsNotUsedAsValues": "error",
         "inlineSourceMap": false,
@@ -23,14 +23,13 @@
             "WebWorker"
         ],
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "newLine": "lf",
         "noEmitOnError": false,
         "noImplicitThis": true,
         "noPropertyAccessFromIndexSignature": false,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
-        "rootDir": "src",
         "outDir": "dist",
         "pretty": true,
         "skipDefaultLibCheck": true,
@@ -39,17 +38,13 @@
         "strict": true,
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "target": "es2020",
         "useDefineForClassFields": false,
         "useUnknownInCatchVariables": true,
         "noImplicitAny": false,
-        "noUncheckedIndexedAccess": false,
-        "baseUrl": ".",
-        "typeRoots": [
-            "types",
-            "voby/dist/types/jsx"
-        ],
+        "noUncheckedIndexedAccess": true,
+        "rootDir": "./src",
         // "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
         // "composite": true,
     },

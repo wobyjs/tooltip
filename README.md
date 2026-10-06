@@ -102,6 +102,40 @@ You can override default styles using Tailwind classes or inline styles:
 
 ---
 
+### **Theming (CSS Custom Properties)**
+
+`TooltipContent`'s default styling (used whenever `class`/`cls` is not overridden) is driven by CSS custom properties instead of hardcoded colors, so it can respond to a host app's theme without needing per-instance class overrides:
+
+| Custom Property     | Default Fallback | Applies To                      |
+|---------------------|-------------------|----------------------------------|
+| `--tooltip-bg`      | `#eeeeee`         | Tooltip background color        |
+| `--tooltip-fg`      | `#000000`         | Tooltip text color               |
+| `--tooltip-border`  | `#000000`         | Tooltip border color             |
+| `--tooltip-shadow`  | `#000000`         | Tooltip drop-shadow color        |
+
+Set these on `:root` (or any ancestor, including inside a shadow root) to retheme every default-styled tooltip in the app:
+
+```css
+:root {
+  --tooltip-bg: #1e293b;
+  --tooltip-fg: #f8fafc;
+  --tooltip-border: #334155;
+  --tooltip-shadow: #000000;
+}
+```
+
+To support multiple themes, map these properties from your own theme tokens per `data-theme` value:
+
+```css
+:root[data-theme="dark"] {
+  --tooltip-bg: var(--qm-pop);
+  --tooltip-fg: var(--qm-ink);
+}
+```
+
+Properties set on `document.documentElement` cascade correctly through shadow DOM into `woby-tooltip-content`'s internally rendered markup, since CSS custom properties inherit across shadow boundaries. An explicit `class`/`cls` override on a given `<TooltipContent>` instance (e.g. `class="bg-yellow-300 text-black"`) takes precedence for that instance and is unaffected by these variables.
+
+---
 
 ### **Requirements**
 

@@ -1,103 +1,104 @@
-import { $$, $, useEffect, ObservableMaybe, Observable, useMemo, type JSX } from 'woby'
-
-//https://www.menucool.com/tooltip/css-tooltip
-
+import { $$, $, useEffect, useMemo, defaults, customElement, HtmlBoolean, HtmlClass, HtmlString, type ElementAttributes, type ObservableMaybe, type Observable, type JSX, type Child } from 'woby'
 
 import { styled } from '@woby/styled'
-import { useComputedStyle, useInvert } from '@woby/use'
+// import { useComputedStyle } from '@woby/use'
 
-// text-left border-b-[#666] border-b border-dotted 
 const tooltipDef = `
 [&:hover_.tpcontents]:visible [&:hover_.tpcontents]:opacity-100
 `
 
-const tooltip = `inline-block relative 
+// tp-trigger is a JS hook class used by TooltipContent to find its parent trigger
+const tooltip = `inline-block relative tp-trigger
 [&:hover_.tpcontents]:visible [&:hover_.tpcontents]:opacity-100
 `
 
-const topDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
-const top = `absolute z-[99999999] left-2/4 -top-5 `
-
+// Theme hook: consuming apps may set --tooltip-bg/--tooltip-fg/--tooltip-border/--tooltip-shadow
+// on any ancestor (e.g. :root[data-theme="..."]) to recolor every tooltip; these custom
+// properties inherit through the shadow-DOM boundary like any other CSS var. Defaults below
+// (light bg, black text) reproduce the pre-upgrade hardcoded look for apps that set nothing.
+const topDef = `bg-[var(--tooltip-bg,#eeeeee)] text-[var(--tooltip-fg,#000000)] min-w-max box-border border shadow-[0_1px_8px_var(--tooltip-shadow,#000000)] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[var(--tooltip-border,#000000)] `
 const top_i = `absolute overflow-hidden top-full after:content-[''] after:absolute after:-translate-x-2/4 after:-translate-y-2/4 after:rotate-45 after:left-2/4 `
 
-const rightDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
-const right = `absolute z-[99999999] ml-5 left-full top-2/4 `
+const rightDef = `bg-[var(--tooltip-bg,#eeeeee)] text-[var(--tooltip-fg,#000000)] min-w-max box-border border shadow-[0_1px_8px_var(--tooltip-shadow,#000000)] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[var(--tooltip-border,#000000)] `
 const right_i = `absolute overflow-hidden right-full after:content-[''] after:absolute after:translate-x-2/4 after:-translate-y-2/4 after:-rotate-45 after:left-0 after:top-2/4 `
 
-const bottomDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.5s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
-const bottom = `absolute z-[99999999] left-2/4 top-10 `
+const bottomDef = `bg-[var(--tooltip-bg,#eeeeee)] text-[var(--tooltip-fg,#000000)] min-w-max box-border border shadow-[0_1px_8px_var(--tooltip-shadow,#000000)] transition-opacity duration-[0.5s] px-5 py-2.5 rounded-lg border-solid border-[var(--tooltip-border,#000000)] `
 const bottom_i = `absolute overflow-hidden bottom-full after:content-[''] after:absolute after:-translate-x-2/4 after:translate-y-2/4 after:rotate-45 after:left-2/4 `
 
-const leftDef = `bg-[#eeeeee] min-w-max box-border border shadow-[0_1px_8px_#000000] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[#000000] `
-const left = `absolute z-[99999999] mr-5 right-full top-2/4 `
+const leftDef = `bg-[var(--tooltip-bg,#eeeeee)] text-[var(--tooltip-fg,#000000)] min-w-max box-border border shadow-[0_1px_8px_var(--tooltip-shadow,#000000)] transition-opacity duration-[0.8s] px-5 py-2.5 rounded-lg border-solid border-[var(--tooltip-border,#000000)] `
 const left_i = `absolute overflow-hidden left-full after:content-[''] after:absolute after:-translate-x-2/4 after:-translate-y-2/4 after:-rotate-45 after:left-0 after:top-2/4 `
 
 
-export const Tooltip = ({ children, class: cls = tooltipDef, className, ...props }: JSX.HTMLAttributes<HTMLDivElement>) => {
+// --- Tooltip ---
+
+const tooltipDefs = () => ({
+    cls: $('', HtmlClass) as ObservableMaybe<string>,
+    class: $('', HtmlClass) as ObservableMaybe<string>,
+    children: $<Child>() as ObservableMaybe<Child>,
+})
+
+export const Tooltip = defaults(tooltipDefs, (props) => {
+    const { children, cls, class: className, ...rest } = props
     return (
         <div
-            class={[tooltip, cls, className]}
-            {...props}
+            class={[tooltip, () => $$(cls) || tooltipDef, className]}
+            {...rest}
         >
             {children}
         </div>
     )
-}
+})
 
-function cssMultiply(value: ObservableMaybe<string | number>, multiplier: number): string {
-    const match = ($$(value) + '').match(/^(-?\d*\.?\d+)([a-z%]*)$/)
+customElement('woby-tooltip', Tooltip)
+
+
+// --- TooltipContent ---
+
+function cssMultiply(value: ObservableMaybe<string>, multiplier: number): string {
+    const val = $$(value)
+    const match = val.match(/^(-?\d*\.?\d+)([a-z%]*)$/)
 
     if (!match)
-        throw new Error(`Invalid CSS unit: ${$$(value)}`)
+        throw new Error(`Invalid CSS unit: ${val}`)
 
     const [, numericValue, unit] = match
-    const result = +numericValue * multiplier
+    const result = (numericValue ? +numericValue : 0) * multiplier
 
     return `${result}${unit}`
 }
 
-const x2 = (value: ObservableMaybe<string | number>) => cssMultiply(value, 2)
-
-const translate = (x: ObservableMaybe<string>, y: ObservableMaybe<string>) => `translate(${$$(x)}, ${$$(y)})`
+const x2 = (value: ObservableMaybe<string>) => cssMultiply(value, 2)
 
 export type PositionType = 'top' | 'right' | 'bottom' | 'left'
-export const TooltipContent = ({ children, style, class: cls = $(), className, static: st, position = 'top', arrowLocation = '50%', arrowSize = '12px', pointerEvents, ...props }: JSX.HTMLAttributes<HTMLDivElement> &
-{
-    position?: ObservableMaybe<PositionType>,
-    arrowLocation?: ObservableMaybe<string | number>,
-    arrowSize?: ObservableMaybe<string | number>,
-    static?: ObservableMaybe<boolean>,
-    pointerEvents?: ObservableMaybe<boolean>
-}) => {
 
-    const setDef = () => {
-        if (!$$(cls))
-            switch ($$(position)) {
-                case 'top': (cls as Observable<string>)(topDef)
-                case 'left': (cls as Observable<string>)(leftDef)
-                case 'right': (cls as Observable<string>)(rightDef)
-                case 'bottom': (cls as Observable<string>)(bottomDef)
-            }
-    }
-    useEffect(setDef)
-    setDef()
+const tooltipContentDefs = () => ({
+    cls: $('', HtmlClass) as ObservableMaybe<string>,
+    class: $('', HtmlClass) as ObservableMaybe<string>,
+    static: $(false, HtmlBoolean) as ObservableMaybe<boolean>,
+    position: $('top') as ObservableMaybe<PositionType>,
+    arrowLocation: $('50%', HtmlString) as ObservableMaybe<string>,
+    arrowSize: $('12px', HtmlString) as ObservableMaybe<string>,
+    pointerEvents: $(false, HtmlBoolean) as ObservableMaybe<boolean>,
+    children: $<Child>() as ObservableMaybe<Child>,
+    style: undefined as any,
+})
 
-    const pos = useMemo(() => {
+export const TooltipContent = defaults(tooltipContentDefs, (props) => {
+    const { children, style, cls, class: className, static: st, position, arrowLocation, arrowSize, pointerEvents, ...rest } = props
+
+    // Compute default class based on position when cls not provided
+    const computedCls = useMemo(() => {
+        const c = $$(cls)
+        if (c) return c
         switch ($$(position)) {
-            case 'top': return top
-            case 'right': return right
-            case 'bottom': return bottom
-            case 'left': return left
+            case 'top': return topDef
+            case 'left': return leftDef
+            case 'right': return rightDef
+            case 'bottom': return bottomDef
+            default: return topDef
         }
     })
-    const transform = useMemo(() => {
-        switch ($$(position)) {
-            case 'top': return translate('-' + $$(arrowLocation), '-100%')
-            case 'left':
-            case 'right': return translate('0', '-' + $$(arrowLocation))
-            case 'bottom': return translate('-' + $$(arrowLocation), '0')
-        }
-    })
+
     const ali = useMemo(() => {
         switch ($$(position)) {
             case 'bottom':
@@ -106,9 +107,10 @@ export const TooltipContent = ({ children, style, class: cls = $(), className, s
             case 'right': return { top: arrowLocation }
         }
     })
+
     const ii = useMemo(() => {
         switch ($$(position)) {
-            case 'top': return top_i + styled`  
+            case 'top': return top_i + styled`
                 margin-left:-${$$(arrowSize)};
                 width:${x2(arrowSize)};
                 height:${$$(arrowSize)};
@@ -118,7 +120,7 @@ export const TooltipContent = ({ children, style, class: cls = $(), className, s
                     height:${$$(arrowSize)};
                 }
      `
-            case 'right': return right_i + styled`  
+            case 'right': return right_i + styled`
                 margin-top:-${$$(arrowSize)};
                 width:${$$(arrowSize)};
                 height:${x2(arrowSize)};
@@ -128,7 +130,7 @@ export const TooltipContent = ({ children, style, class: cls = $(), className, s
                     height:${$$(arrowSize)};
                 }
      `
-            case 'bottom': return bottom_i + styled`  
+            case 'bottom': return bottom_i + styled`
                 margin-left:-${$$(arrowSize)};
                 width:${x2(arrowSize)};
                 height:${$$(arrowSize)};
@@ -138,7 +140,7 @@ export const TooltipContent = ({ children, style, class: cls = $(), className, s
                     height:${$$(arrowSize)};
                 }
      `
-            case 'left': return left_i + styled`  
+            case 'left': return left_i + styled`
                 margin-top:-${$$(arrowSize)};
                 width:${$$(arrowSize)};
                 height:${x2(arrowSize)};
@@ -154,21 +156,79 @@ export const TooltipContent = ({ children, style, class: cls = $(), className, s
     const tooltipRef = $<HTMLDivElement>()
     const ir = $<HTMLElement>()
 
-    const sty = useComputedStyle(tooltipRef, ['background-color', /^border-(?!.*-radius$)/, 'box-shadow'])
-    // useEffect(() => console.log($$(sty)))
+    // Fixed positioning: computed on mouseenter of the nearest .tp-trigger ancestor.
+    // position: fixed escapes overflow:hidden/auto clipping from scroll containers.
+    const posStyle = $<Record<string, string>>({ position: 'fixed', left: '-9999px', top: '-9999px' })
+
+    useEffect(() => {
+        const el = $$(tooltipRef)
+        if (!el) return
+
+        const trigger = el.closest('.tp-trigger') as HTMLElement
+        if (!trigger) return
+
+        const update = () => {
+            const rect = trigger.getBoundingClientRect()
+            const gap = 6
+            const pos = $$(position) as PositionType
+
+            switch (pos) {
+                case 'top':
+                    posStyle({
+                        position: 'fixed',
+                        left: `${rect.left + rect.width / 2}px`,
+                        top: `${rect.top - gap}px`,
+                        transform: 'translateX(-50%) translateY(-100%)',
+                    })
+                    break
+                case 'bottom':
+                    posStyle({
+                        position: 'fixed',
+                        left: `${rect.left + rect.width / 2}px`,
+                        top: `${rect.bottom + gap}px`,
+                        transform: 'translateX(-50%)',
+                    })
+                    break
+                case 'left':
+                    posStyle({
+                        position: 'fixed',
+                        left: `${rect.left - gap}px`,
+                        top: `${rect.top + rect.height / 2}px`,
+                        transform: 'translateX(-100%) translateY(-50%)',
+                    })
+                    break
+                case 'right':
+                    posStyle({
+                        position: 'fixed',
+                        left: `${rect.right + gap}px`,
+                        top: `${rect.top + rect.height / 2}px`,
+                        transform: 'translateY(-50%)',
+                    })
+                    break
+            }
+        }
+
+        trigger.addEventListener('mouseenter', update)
+        return () => trigger.removeEventListener('mouseenter', update)
+    })
+
+    // TODO: Re-enable when useComputedStyle import is fixed
+    // const sty = useComputedStyle(tooltipRef, ['background-color', /^border-(?!.*-radius$)/, 'box-shadow'])
+    const sty = $({})
 
     return (
         <div
             ref={tooltipRef}
             class={[
-                pos,
-                cls,
+                'z-[99999999]',
+                computedCls,
                 () => $$(st) ? '' : 'invisible opacity-0',
-                () => $$(pointerEvents) ? "" : "pointer-events-none",
+                () => $$(pointerEvents) ? '' : 'pointer-events-none',
                 className,
-                'tpcontents']}
-            style={[style, { transform }]}
-            {...props}
+                'tpcontents',
+            ]}
+            style={[style, posStyle]}
+            {...rest}
         >
             {children}
             {() => <i ref={ir} class={[ii, styled`
@@ -176,5 +236,17 @@ export const TooltipContent = ({ children, style, class: cls = $(), className, s
                     ${Object.keys($$(sty)).map(k => `${k}:${$$(sty)[k]};\n`).join('')}
                 }
             `]} style={ali}></i>}
-        </div>)
+        </div>
+    )
+})
+
+customElement('woby-tooltip-content', TooltipContent)
+
+declare module 'woby' {
+    namespace JSX {
+        interface IntrinsicElements {
+            'woby-tooltip': ElementAttributes<typeof Tooltip>
+            'woby-tooltip-content': ElementAttributes<typeof TooltipContent>
+        }
+    }
 }

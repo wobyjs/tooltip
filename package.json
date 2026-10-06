@@ -1,6 +1,6 @@
 {
     "name": "@woby/tooltip",
-    "version": "1.0.21",
+    "version": "1.0.30",
     "publishConfig": {
         "access": "public"
     },
@@ -9,6 +9,15 @@
     "module": "./dist/index.es.js",
     "browser": "./dist/index.umd.js",
     "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.cjs.js"
+        },
+        "./dist/*": "./dist/*",
+        "./package.json": "./package.json"
+    },
     "type": "module",
     "scripts": {
         "git": "git add . && git commit -m \"Bump version\" && git push",
@@ -20,9 +29,9 @@
         "declaration:watch": "tsc --build --force --declaration --emitDeclarationOnly --declarationMap  --verbose --watch",
         "watch": "run-p build:watch",
         "build": "run-s build:vite declaration bump",
-        "build:web": "vite build --config=vite.config.web.mts --mode production",
-        "dev": "vite preview --config=vite.config.web.mts --host",
-        "dev:only": "vite --config=vite.config.web.mts --force --mode dev --host",
+        "build:web": "vite build --mode web",
+        "dev": "vite preview --host",
+        "dev:only": "vite --force --mode dev --host",
         "dev1": "run-p dev:only",
         "build:vite": "vite build",
         "build:watch": "vite build --watch",
@@ -43,12 +52,12 @@
         "woby": "workspace:../woby"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.3.0",
-        "concurrently": "^9.2.1",
-        "puppeteer": "^25.0.4",
+        "@tailwindcss/vite": "^4.3.2",
+        "concurrently": "^10.0.3",
+        "puppeteer": "^25.3.0",
         "style-loader": "^4.0.0",
-        "tailwindcss": "^4.3.0",
-        "vite": "^8.0.14",
+        "tailwindcss": "^4.3.2",
+        "vite": "^8.1.5",
         "vite-plugin-tsconfig": "^2.0.0"
     },
     "author": "Chi Chong <wobyjs@gmail.com>",
@@ -58,9 +67,9 @@
         "url": "git@github.com:wobyjs/tooltip.git"
     },
     "dependencies": {
-        "@tailwindcss/postcss": "^4.3.0",
-        "autoprefixer": "^10.5.0",
-        "postcss": "^8.5.15",
-        "typescript": "6.0.3"
+        "@tailwindcss/postcss": "^4.3.2",
+        "autoprefixer": "^10.5.3",
+        "postcss": "^8.5.19",
+        "typescript": "7.0.2"
     }
 }
